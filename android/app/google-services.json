@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "776305978149",
+    "project_id": "semster-project-17412",
+    "storage_bucket": "semster-project-17412.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776305978149:android:1a3a6cfb24609ff50408cc",
+        "android_client_info": {
+          "package_name": "com.example.semster_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb_oWS6foGnony_oswDO4aExgjPDpANSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
