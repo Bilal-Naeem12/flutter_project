@@ -2,26 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class PDF_Reader extends StatefulWidget {
+  const PDF_Reader({super.key});
+  static String id = 'welcome_screen';
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<PDF_Reader> createState() => _PDF_ReaderState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _PDF_ReaderState extends State<PDF_Reader> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
         child: Container(
           child: SfPdfViewer.network(
-            "https://www.planetebook.com/free-ebooks/1984.pdf",
+            "https://www.planetebook.com/free-ebooks/the-great-gatsby.pdf",
             scrollDirection: PdfScrollDirection.horizontal,
             pageLayoutMode: PdfPageLayoutMode.single,
           ),

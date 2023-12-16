@@ -4,7 +4,7 @@ import 'package:semster_project/screens/pdf_read.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
-
+  static String id = 'splash_screen';
   @override
   State<SplashPage> createState() => _SplashPageState();
 }

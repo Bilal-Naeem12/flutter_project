@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../components/components.dart';
 import '../constants.dart';
-import '../screens/welcome.dart';
+import 'welcome_screen.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import '../screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,102 +35,104 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  const TopScreenImage(screenImageName: 'welcome.png'),
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const ScreenTitle(title: 'Login'),
-                          CustomTextField(
-                            textField: TextField(
+              child: Center(
+                child: Column(
+                  children: [
+                    const TopScreenImage(screenImageName: 'welcome.png'),
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const ScreenTitle(title: 'Login'),
+                            CustomTextField(
+                              textField: TextField(
+                                  onChanged: (value) {
+                                    _email = value;
+                                  },
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                  decoration: kTextInputDecoration.copyWith(
+                                      hintText: 'Email')),
+                            ),
+                            CustomTextField(
+                              textField: TextField(
+                                obscureText: true,
                                 onChanged: (value) {
-                                  _email = value;
+                                  _password = value;
                                 },
                                 style: const TextStyle(
                                   fontSize: 20,
                                 ),
                                 decoration: kTextInputDecoration.copyWith(
-                                    hintText: 'Email')),
-                          ),
-                          CustomTextField(
-                            textField: TextField(
-                              obscureText: true,
-                              onChanged: (value) {
-                                _password = value;
-                              },
-                              style: const TextStyle(
-                                fontSize: 20,
+                                    hintText: 'Password'),
                               ),
-                              decoration: kTextInputDecoration.copyWith(
-                                  hintText: 'Password'),
                             ),
-                          ),
-                          CustomBottomScreen(
-                            textButton: 'Login',
-                            heroTag: 'login_btn',
-                            question: 'Forgot password?',
-                            buttonPressed: () async {
-                              FocusManager.instance.primaryFocus?.unfocus();
-                              setState(() {
-                                _saving = true;
-                              });
-                              try {
-                                UserCredential? firebaseUser =
-                                    await _auth.signInWithEmailAndPassword(
-                                        email: _email, password: _password);
+                            CustomBottomScreen(
+                              textButton: 'Login',
+                              heroTag: 'login_btn',
+                              question: 'Forgot password?',
+                              buttonPressed: () async {
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                setState(() {
+                                  _saving = true;
+                                });
+                                try {
+                                  UserCredential? firebaseUser =
+                                      await _auth.signInWithEmailAndPassword(
+                                          email: _email, password: _password);
 
-                                if (context.mounted) {
-                                  setState(() {
-                                    _saving = false;
-                                    Navigator.popAndPushNamed(
-                                        context, LoginScreen.id);
-                                  });
-                                  Navigator.pushNamed(
-                                      context, WelcomeScreen.id);
-                                }
-                              } catch (e) {
-                                // ignore: use_build_context_synchronously
-                                signUpAlert(
-                                  context: context,
-                                  onPressed: () {
+                                  if (context.mounted) {
                                     setState(() {
                                       _saving = false;
+                                      Navigator.popAndPushNamed(
+                                          context, LoginScreen.id);
                                     });
-                                    Navigator.popAndPushNamed(
-                                        context, LoginScreen.id);
+                                    Navigator.pushNamed(
+                                        context, WelcomeScreen.id);
+                                  }
+                                } catch (e) {
+                                  // ignore: use_build_context_synchronously
+                                  signUpAlert(
+                                    context: context,
+                                    onPressed: () {
+                                      setState(() {
+                                        _saving = false;
+                                      });
+                                      Navigator.popAndPushNamed(
+                                          context, LoginScreen.id);
+                                    },
+                                    title: 'WRONG PASSWORD OR EMAIL',
+                                    desc:
+                                        'Confirm your email and password and try again',
+                                    btnText: 'Try Now',
+                                  ).show();
+                                }
+                              },
+                              questionPressed: () {
+                                signUpAlert(
+                                  onPressed: () async {
+                                    await FirebaseAuth.instance
+                                        .sendPasswordResetEmail(email: _email);
                                   },
-                                  title: 'WRONG PASSWORD OR EMAIL',
+                                  title: 'RESET YOUR PASSWORD',
                                   desc:
-                                      'Confirm your email and password and try again',
-                                  btnText: 'Try Now',
+                                      'Click on the button to reset your password',
+                                  btnText: 'Reset Now',
+                                  context: context,
                                 ).show();
-                              }
-                            },
-                            questionPressed: () {
-                              signUpAlert(
-                                onPressed: () async {
-                                  await FirebaseAuth.instance
-                                      .sendPasswordResetEmail(email: _email);
-                                },
-                                title: 'RESET YOUR PASSWORD',
-                                desc:
-                                    'Click on the button to reset your password',
-                                btnText: 'Reset Now',
-                                context: context,
-                              ).show();
-                            },
-                          ),
-                        ],
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

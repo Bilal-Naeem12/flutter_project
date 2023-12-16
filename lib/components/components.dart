@@ -83,6 +83,23 @@ class ScreenTitle extends StatelessWidget {
   }
 }
 
+class CustomTitle extends StatelessWidget {
+  const CustomTitle({super.key, required this.title});
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: const TextStyle(
+        color: kBackgroundColor,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}
+
 class CustomTextField extends StatelessWidget {
   CustomTextField({super.key, required this.textField});
   final TextField textField;
@@ -208,4 +225,30 @@ Alert showAlert({
       )
     ],
   );
+}
+
+Container CustomContainer({required String title, required IconData icon}) {
+  return Container(
+    padding: EdgeInsets.fromLTRB(20, 15, 50, 15),
+    width: 320,
+    height: 150,
+    decoration: BoxDecoration(
+      color: kTextColor,
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        CustomTitle(title: title),
+        Icon(
+          icon,
+          color: kBackgroundColor,
+        ),
+      ],
+    ),
+  );
+}
+
+void PushNextScreen({required BuildContext context, required Widget widget}) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
 }

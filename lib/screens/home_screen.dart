@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:semster_project/sevice/auth.dart';
 import '../components/components.dart';
 import '../screens/login_screen.dart';
 import '../screens/signup_screen.dart';
@@ -84,7 +85,9 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              AuthMethods().signInWithGoogle(context);
+                            },
                             icon: CircleAvatar(
                               radius: 25,
                               backgroundColor: Colors.transparent,
