@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const Color kBackgroundColor = Color(0xFFD4DEF7);
-const Color kTextColor = Color(0xFF4879C5);
+const Color kBackgroundColor = Color.fromARGB(255, 240, 241, 243);
+const Color kTextColor = Color.fromARGB(255, 163, 211, 32);
 const InputDecoration kTextInputDecoration = InputDecoration(
   border: InputBorder.none,
   hintText: '',

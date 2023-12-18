@@ -25,11 +25,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+          scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
           textTheme: const TextTheme(
-        bodyMedium: TextStyle(
-          fontFamily: 'Ubuntu',
-        ),
-      )),
+            bodyMedium: TextStyle(
+              fontFamily: 'Ubuntu',
+            ),
+          )),
       initialRoute: HomeScreen.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),

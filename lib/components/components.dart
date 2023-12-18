@@ -111,9 +111,9 @@ class CustomTextField extends StatelessWidget {
         horizontal: 30,
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          width: 2.5,
+          width: 2,
           color: kTextColor,
         ),
       ),

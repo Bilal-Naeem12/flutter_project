@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semster_project/constants.dart';
 import 'package:semster_project/screens/new_screen.dart';
 import '../components/components.dart';
 
@@ -22,9 +23,11 @@ class _Genres_ScreenState extends State<Genres_Screen> {
         title: Text(
           "Genre",
           style: TextStyle(
-              color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+              color: const Color.fromARGB(255, 255, 255, 255),
+              fontSize: 25,
+              fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: kTextColor,
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
