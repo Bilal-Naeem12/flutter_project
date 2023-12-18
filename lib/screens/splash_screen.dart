@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:semster_project/screens/login_screen.dart';
-import 'package:semster_project/screens/pdf_read.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -12,9 +11,9 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+          context, MaterialPageRoute(builder: (context) => const LoginScreen()));
     });
     // TODO: implement initState
     super.initState();

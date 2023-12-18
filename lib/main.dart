@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:semster_project/firebase_options.dart';
+import 'package:semster_project/screens/new_screen.dart';
 import 'package:semster_project/screens/pdf_read.dart';
 import 'package:semster_project/screens/splash_screen.dart';
 import '../screens/home_screen.dart';
@@ -29,14 +30,17 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Ubuntu',
         ),
       )),
-      initialRoute: PDF_Reader.id,
+      initialRoute: HomeScreen.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
-        LoginScreen.id: (context) => LoginScreen(),
-        SignUpScreen.id: (context) => SignUpScreen(),
-        WelcomeScreen.id: (context) => WelcomeScreen(),
-        SplashPage.id: (context) => SplashPage(),
-        PDF_Reader.id: (context) => PDF_Reader(),
+        LoginScreen.id: (context) => const LoginScreen(),
+        SignUpScreen.id: (context) => const SignUpScreen(),
+        WelcomeScreen.id: (context) => const WelcomeScreen(),
+        SplashPage.id: (context) => const SplashPage(),
+        PDF_Reader.id: (context) => const PDF_Reader(),
+        NewScreen.id: (context) => NewScreen(
+              text: "asdsad",
+            )
       },
     );
   }

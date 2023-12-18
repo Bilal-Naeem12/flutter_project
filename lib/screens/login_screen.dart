@@ -92,8 +92,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Navigator.popAndPushNamed(
                                           context, LoginScreen.id);
                                     });
-                                    Navigator.pushNamed(
-                                        context, WelcomeScreen.id);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                WelcomeScreen()));
                                   }
                                 } catch (e) {
                                   // ignore: use_build_context_synchronously
