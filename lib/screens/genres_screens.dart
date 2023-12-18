@@ -22,22 +22,17 @@ class _Genres_ScreenState extends State<Genres_Screen> {
         automaticallyImplyLeading: false,
         title: Text(
           "Genre",
-          style: TextStyle(
-              color: const Color.fromARGB(255, 255, 255, 255),
-              fontSize: 25,
-              fontWeight: FontWeight.bold),
         ),
-        backgroundColor: kTextColor,
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
+        padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
         // implement GridView.builder
         child: GridView.builder(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
-                childAspectRatio: 1,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 10),
+                childAspectRatio: 2,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 10),
             itemCount: myProducts.length,
             itemBuilder: (BuildContext ctx, index) {
               return GestureDetector(
@@ -47,12 +42,12 @@ class _Genres_ScreenState extends State<Genres_Screen> {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.black,
+                      color: kBackgroundColor,
                       image: DecorationImage(
-                          opacity: 0.5,
+                          opacity: 0.8,
                           image: NetworkImage(
                               "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/fa0a2175305113.5c48c4442b973.jpg"),
-                          fit: BoxFit.fill),
+                          fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(8)),
                   child: Text(
                     "Horror",
@@ -61,7 +56,7 @@ class _Genres_ScreenState extends State<Genres_Screen> {
                         fontStyle: FontStyle.italic,
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                        color: kBackgroundColor),
                   ),
                 ),
               );

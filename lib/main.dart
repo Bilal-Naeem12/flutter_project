@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semster_project/constants.dart';
 import 'package:semster_project/firebase_options.dart';
 import 'package:semster_project/screens/new_screen.dart';
 import 'package:semster_project/screens/pdf_read.dart';
@@ -25,7 +26,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
+          colorScheme: ColorScheme.fromSeed(seedColor: kTextColor),
+          appBarTheme: AppBarTheme(
+              backgroundColor: kTextColor,
+              titleTextStyle: TextStyle(
+                  color: kBackgroundColor,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold)),
+          hintColor: kBackgroundColor,
+          scaffoldBackgroundColor: Colors.black,
           textTheme: const TextTheme(
             bodyMedium: TextStyle(
               fontFamily: 'Ubuntu',

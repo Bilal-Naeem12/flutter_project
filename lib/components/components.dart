@@ -22,15 +22,15 @@ class CustomButton extends StatelessWidget {
         onPressed();
       },
       child: Material(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(8),
         elevation: 4,
         child: Container(
           width: width,
-          padding: const EdgeInsets.all(13),
+          padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: isOutlined ? Colors.white : kTextColor,
-            border: Border.all(color: kTextColor, width: 2.5),
-            borderRadius: BorderRadius.circular(30),
+            border: Border.all(color: kTextColor, width: 1.5),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Center(
             child: Text(
@@ -76,9 +76,7 @@ class ScreenTitle extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
-        fontSize: 40,
-        fontWeight: FontWeight.bold,
-      ),
+          fontSize: 40, fontWeight: FontWeight.bold, color: kBackgroundColor),
     );
   }
 }
@@ -92,8 +90,9 @@ class CustomTitle extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
+        fontFamily: "Roboto",
         color: kBackgroundColor,
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -152,7 +151,10 @@ class CustomBottomScreen extends StatelessWidget {
               onTap: () {
                 questionPressed();
               },
-              child: Text(question),
+              child: Text(
+                question,
+                style: TextStyle(color: kTextColor),
+              ),
             ),
           ),
         ),
@@ -237,12 +239,15 @@ Container CustomContainer({required String title, required IconData icon}) {
       borderRadius: BorderRadius.circular(10),
     ),
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         CustomTitle(title: title),
+        SizedBox(
+          width: 60,
+        ),
         Icon(
           icon,
           color: kBackgroundColor,
+          size: 34,
         ),
       ],
     ),

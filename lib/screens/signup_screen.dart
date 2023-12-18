@@ -39,7 +39,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: LoadingOverlay(
           isLoading: _saving,
           child: SafeArea(

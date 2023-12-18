@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:semster_project/components/components.dart';
+import 'package:semster_project/constants.dart';
 import 'package:semster_project/screens/pdf_read.dart';
 
 class NovelCard extends StatefulWidget {
@@ -18,15 +19,17 @@ class _NovelCardState extends State<NovelCard> {
       onTap: () => Navigator.push(
           context, MaterialPageRoute(builder: (context) => PDF_Reader())),
       child: Card(
+        shadowColor: kTextColor,
+        color: kBackgroundColor,
         elevation: 2,
         child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.network(
-                "https://marketplace.canva.com/EAFPpkFj4is/1/0/1003w/canva-7clVjOZ2o_Y.jpg",
+                "https://marketplace.canva.com/EAFfSnGl7II/2/0/1003w/canva-elegant-dark-woods-fantasy-photo-book-cover-vAt8PH1CmqQ.jpg",
                 width: 100,
-                height: 150,
+                height: 250,
               ),
               SizedBox(
                 width: 10,
