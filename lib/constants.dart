@@ -7,3 +7,10 @@ const InputDecoration kTextInputDecoration = InputDecoration(
   hintText: '',
   // ),
 );
+
+InputDecoration kTextInputDecorationWriter = InputDecoration(
+  hintStyle: TextStyle(fontSize: 15, color: kBackgroundColor.withOpacity(0.7)),
+  border: InputBorder.none,
+  hintText: '',
+  // ),
+);

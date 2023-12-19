@@ -63,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               _password = value;
                             },
                             style: const TextStyle(
+                              color: kBackgroundColor,
                               fontSize: 20,
                             ),
                             decoration: kTextInputDecoration.copyWith(
