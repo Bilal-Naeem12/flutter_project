@@ -122,56 +122,26 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
-class CustomFormField extends StatelessWidget {
-  CustomFormField(
-      {super.key,
-      required this.labelText,
-      required this.hintText,
-      this.maxLines = 1,
-      this.maxLength,
-      this.validatorf = TextValidator});
-  final String labelText;
-  final String hintText;
-  int maxLines;
-  int? maxLength;
-  final Function validatorf;
+class CustomFormField extends StatefulWidget {
+  CustomFormField({
+    super.key,
+    required this.textFormField,
+  });
 
+  final TextFormField textFormField;
+
+  @override
+  State<CustomFormField> createState() => _CustomFormFieldState();
+}
+
+class _CustomFormFieldState extends State<CustomFormField> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       SizedBox(
         height: 20,
       ),
-      TextFormField(
-        maxLength: maxLength,
-        maxLines: maxLines,
-        keyboardType: TextInputType.multiline,
-        style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          errorStyle: TextStyle(fontSize: 15, color: kErrorColor),
-          labelStyle: TextStyle(
-              color: Colors.white, fontSize: 22, fontWeight: FontWeight.w800),
-          hintStyle:
-              TextStyle(fontSize: 15, color: kBackgroundColor.withOpacity(0.7)),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: kTextColor),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: kErrorColor),
-          ),
-          labelText: labelText,
-          hintText: hintText,
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
-        ),
-        cursorColor: kTextColor,
-        // The validator receives the text that the user has entered.
-        validator: (value) => validatorf(value),
-      ),
+      widget.textFormField
     ]);
   }
 }

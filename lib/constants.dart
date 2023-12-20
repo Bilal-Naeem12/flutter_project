@@ -9,11 +9,26 @@ const InputDecoration kTextInputDecoration = InputDecoration(
   // ),
 );
 
-InputDecoration kTextInputDecorationWriter = InputDecoration(
+InputDecoration kTextInputDecorationWriter(labelText, hintText) {
+  return InputDecoration(
+    errorStyle: TextStyle(fontSize: 15, color: kErrorColor),
+    labelStyle: TextStyle(
+        color: Colors.white, fontSize: 22, fontWeight: FontWeight.w800),
     hintStyle:
         TextStyle(fontSize: 15, color: kBackgroundColor.withOpacity(0.7)),
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-    labelText: 'Default TextField',
-    hintText: "asd",
-    enabledBorder:
-        OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)));
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10.0),
+      borderSide: BorderSide(color: kTextColor),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10.0),
+      borderSide: BorderSide(color: kErrorColor),
+    ),
+    labelText: labelText,
+    hintText: hintText,
+    floatingLabelBehavior: FloatingLabelBehavior.auto,
+  );
+}

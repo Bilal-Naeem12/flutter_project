@@ -6,6 +6,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/components/validatorFucntions.dart';
 import 'package:semster_project/constants.dart';
+import 'package:semster_project/models/novel.dart';
 import 'package:semster_project/screens/home_screen.dart';
 import 'package:semster_project/screens/login_screen.dart';
 import 'package:semster_project/screens/welcome_screen.dart';
@@ -17,34 +18,21 @@ class WriteScreen extends StatefulWidget {
   State<WriteScreen> createState() => _WriteScreenState();
 }
 
-// id = DateTime.now()
-//                                         .millisecondsSinceEpoch
-//                                         .abs()
-//                                         .toString()
-//                                         .substring(5);
-
-//                                     databaseRef
-//                                         .child('writer')
-//                                         .child(_title.toString())
-//                                         .set({
-//                                       "title": _title.toString(),
-//                                       "writer": _write_name.toString(),
-//                                       "novel_url": _novel_url.toString(),
-//                                       "image_url": _image_url.toString(),
-//                                       "description": _description.toString(),
-//                                       "createdAt": DateTime.now().toString(),
-//                                       "id": id
-//                                     });
-
 class _WriteScreenState extends State<WriteScreen> {
+  Controller() {
+    setState(() {
+      _write_name = "sadqa";
+    });
+  }
+
   final _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
-  final databaseRef = FirebaseDatabase.instance.ref("writers");
-  late String _title;
-  late String _write_name;
-  late String _novel_url;
-  late String _image_url;
-  late String _description;
+  final databaseRef = FirebaseDatabase.instance.ref("NOVEL");
+  String _title = "";
+  String _write_name = "";
+  String _novel_url = "";
+  String _image_url = "";
+  String _description = "";
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +43,6 @@ class _WriteScreenState extends State<WriteScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          centerTitle: true,
           title: ScreenTitle(title: 'Writer Form'),
         ),
         body: SafeArea(
@@ -77,19 +63,72 @@ class _WriteScreenState extends State<WriteScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               CustomFormField(
-                                  labelText: "Title",
-                                  hintText: "Enter Novel Title"),
+                                textFormField: TextFormField(
+                                  onChanged: (val) => _title = val,
+
+                                  keyboardType: TextInputType.multiline,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: kTextInputDecorationWriter(
+                                      "Title", "Enter Novel Title"),
+                                  cursorColor: kTextColor,
+                                  // The validator receives the text that the user has entered.
+                                  validator: (value) => TextValidator(value),
+                                ),
+                              ),
                               CustomFormField(
-                                  labelText: "Writer Name",
-                                  hintText: "Enter Novel\'s Write Name"),
+                                textFormField: TextFormField(
+                                  onChanged: (val) => _write_name = val,
+
+                                  keyboardType: TextInputType.multiline,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: kTextInputDecorationWriter(
+                                      "Writer Name",
+                                      "Enter Novel\'s Write Name"),
+                                  cursorColor: kTextColor,
+                                  // The validator receives the text that the user has entered.
+                                  validator: (value) => TextValidator(value),
+                                ),
+                              ),
                               CustomFormField(
-                                  labelText: "Image URL",
-                                  hintText: "Enter Novel URL"),
+                                textFormField: TextFormField(
+                                  onChanged: (val) => _novel_url = val,
+
+                                  keyboardType: TextInputType.multiline,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: kTextInputDecorationWriter(
+                                      "Novel URL", "Enter Novel URL"),
+                                  cursorColor: kTextColor,
+                                  // The validator receives the text that the user has entered.
+                                  validator: (value) => TextValidator(value),
+                                ),
+                              ),
                               CustomFormField(
+                                textFormField: TextFormField(
+                                  onChanged: (val) => _image_url = val,
+
+                                  keyboardType: TextInputType.multiline,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: kTextInputDecorationWriter(
+                                      "Image URL", "Enter Image URL"),
+                                  cursorColor: kTextColor,
+                                  // The validator receives the text that the user has entered.
+                                  validator: (value) => TextValidator(value),
+                                ),
+                              ),
+                              CustomFormField(
+                                textFormField: TextFormField(
+                                  onChanged: (val) => _description = val,
                                   maxLength: 100,
                                   maxLines: 8,
-                                  labelText: "Description",
-                                  hintText: "Enter Novel Descripton"),
+                                  keyboardType: TextInputType.multiline,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: kTextInputDecorationWriter(
+                                      "Description", "Enter Novel Descripton"),
+                                  cursorColor: kTextColor,
+                                  // The validator receives the text that the user has entered.
+                                  validator: (value) => TextValidator(value),
+                                ),
+                              ),
                               SizedBox(
                                 height: 40,
                               ),
@@ -97,20 +136,43 @@ class _WriteScreenState extends State<WriteScreen> {
                                 width: 400,
                                 buttonText: "Submit",
                                 onPressed: () {
-                                  // Validate returns true if the form is valid, or false otherwise.
-                                  if (_formKey.currentState!.validate()) {
-                                    // If the form is valid, display a snackbar. In the real world,
-                                    showAlert(
-                                            context: context,
-                                            onPressed: () {
-                                              Navigator.popAndPushNamed(
-                                                  context, WelcomeScreen.id);
-                                            },
-                                            title: 'Congratulation ',
-                                            desc: 'Your Novel is Submitted',
-                                            alertType: AlertType.success)
-                                        .show();
-                                  }
+                                  try {
+                                    if (_formKey.currentState!.validate()) {
+                                      String id = DateTime.now()
+                                          .millisecondsSinceEpoch
+                                          .abs()
+                                          .toString()
+                                          .substring(5);
+
+                                      databaseRef
+                                          .child('novels')
+                                          .child(_title.toString())
+                                          .set({
+                                        "_title": _title.toString(),
+                                        "_write_name": "Asdasd",
+                                        "_novel_url": _novel_url.toString(),
+                                        "_image_url": _image_url.toString(),
+                                        "_description": _description.toString(),
+                                        id: int.parse(id)
+                                      });
+                                      // If the form is valid, display a snackbar. In the real world,
+                                      showAlert(
+                                              context: context,
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            WelcomeScreen()));
+                                              },
+                                              title: 'Congratulation ',
+                                              desc: 'Your Novel is Submitted',
+                                              alertType: AlertType.success)
+                                          .show();
+                                    }
+                                  } catch (e) {
+                                    print(e);
+                                  } // Validate returns true if the form is valid, or false otherwise.
                                 },
                               ),
                               SizedBox(

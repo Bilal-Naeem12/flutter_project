@@ -19,9 +19,8 @@ class _Genres_ScreenState extends State<Genres_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          "Genre",
+        title: ScreenTitle(
+          title: "Genre",
         ),
       ),
       body: Padding(
@@ -44,7 +43,7 @@ class _Genres_ScreenState extends State<Genres_Screen> {
                   decoration: BoxDecoration(
                       color: kBackgroundColor,
                       image: DecorationImage(
-                          opacity: 0.8,
+                          opacity: 1,
                           image: NetworkImage(
                               "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/fa0a2175305113.5c48c4442b973.jpg"),
                           fit: BoxFit.cover),

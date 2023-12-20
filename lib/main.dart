@@ -31,13 +31,11 @@ class MyApp extends StatelessWidget {
               primary: kTextColor,
               secondary: kTextColor),
           appBarTheme: AppBarTheme(
-              backgroundColor: kTextColor,
-              titleTextStyle: TextStyle(
-                  color: kBackgroundColor,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold)),
+            backgroundColor: Colors.black,
+            centerTitle: true,
+          ),
           hintColor: kBackgroundColor,
-          scaffoldBackgroundColor: Colors.black,
+          scaffoldBackgroundColor: Color.fromARGB(92, 162, 168, 160),
           textTheme: const TextTheme(
             bodyMedium: TextStyle(
               fontFamily: 'Ubuntu',

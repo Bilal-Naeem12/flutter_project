@@ -76,8 +76,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               _password = value;
                             },
                             style: const TextStyle(
-                              fontSize: 20,
-                            ),
+                                fontSize: 20, color: Colors.white),
                             decoration: kTextInputDecoration.copyWith(
                               hintText: 'Password',
                             ),
@@ -90,8 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               _confirmPass = value;
                             },
                             style: const TextStyle(
-                              fontSize: 20,
-                            ),
+                                fontSize: 20, color: Colors.white),
                             decoration: kTextInputDecoration.copyWith(
                               hintText: 'Confirm Password',
                             ),
