@@ -58,12 +58,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const ScreenTitle(title: 'Sign Up'),
                         CustomTextField(
                           textField: TextField(
+                            cursorColor: kTextColor,
                             onChanged: (value) {
                               _email = value;
                             },
                             style: const TextStyle(
-                              fontSize: 20,
-                            ),
+                                fontSize: 20, color: Colors.white),
                             decoration: kTextInputDecoration.copyWith(
                               hintText: 'Email',
                             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semster_project/components/validatorFucntions.dart';
 import '../constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -76,7 +77,7 @@ class ScreenTitle extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
-          fontSize: 40, fontWeight: FontWeight.bold, color: kBackgroundColor),
+          fontSize: 35, fontWeight: FontWeight.bold, color: kBackgroundColor),
     );
   }
 }
@@ -124,38 +125,52 @@ class CustomTextField extends StatelessWidget {
 class CustomFormField extends StatelessWidget {
   CustomFormField(
       {super.key,
-      required this.textField,
-      required this.formTitle,
-      this.height = 50});
-  final TextField textField;
-  final String formTitle;
-  final double height;
+      required this.labelText,
+      required this.hintText,
+      this.maxLines = 1,
+      this.maxLength,
+      this.validatorf = TextValidator});
+  final String labelText;
+  final String hintText;
+  int maxLines;
+  int? maxLength;
+  final Function validatorf;
+
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Column(children: [
       SizedBox(
         height: 20,
       ),
-      Text(
-        formTitle,
-        style: TextStyle(color: kTextColor.withOpacity(1), fontSize: 20),
-      ),
-      SizedBox(
-        height: 5,
-      ),
-      Container(
-        height: height,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            width: 2,
-            color: kBackgroundColor,
+      TextFormField(
+        maxLength: maxLength,
+        maxLines: maxLines,
+        keyboardType: TextInputType.multiline,
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          errorStyle: TextStyle(fontSize: 15, color: kErrorColor),
+          labelStyle: TextStyle(
+              color: Colors.white, fontSize: 22, fontWeight: FontWeight.w800),
+          hintStyle:
+              TextStyle(fontSize: 15, color: kBackgroundColor.withOpacity(0.7)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
           ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: kTextColor),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: kErrorColor),
+          ),
+          labelText: labelText,
+          hintText: hintText,
+          floatingLabelBehavior: FloatingLabelBehavior.auto,
         ),
-        child: textField,
+        cursorColor: kTextColor,
+        // The validator receives the text that the user has entered.
+        validator: (value) => validatorf(value),
       ),
     ]);
   }
@@ -248,10 +263,11 @@ Alert showAlert({
   required String title,
   required String desc,
   required BuildContext context,
+  AlertType alertType = AlertType.error,
 }) {
   return Alert(
     context: context,
-    type: AlertType.error,
+    type: alertType,
     title: title,
     desc: desc,
     buttons: [

@@ -26,7 +26,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: kTextColor),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: kTextColor,
+              primary: kTextColor,
+              secondary: kTextColor),
           appBarTheme: AppBarTheme(
               backgroundColor: kTextColor,
               titleTextStyle: TextStyle(
