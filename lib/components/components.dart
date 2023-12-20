@@ -123,9 +123,13 @@ class CustomTextField extends StatelessWidget {
 
 class CustomFormField extends StatelessWidget {
   CustomFormField(
-      {super.key, required this.textField, required this.formTitle});
+      {super.key,
+      required this.textField,
+      required this.formTitle,
+      this.height = 50});
   final TextField textField;
   final String formTitle;
+  final double height;
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -140,6 +144,7 @@ class CustomFormField extends StatelessWidget {
         height: 5,
       ),
       Container(
+        height: height,
         padding: const EdgeInsets.symmetric(
           horizontal: 10,
         ),
