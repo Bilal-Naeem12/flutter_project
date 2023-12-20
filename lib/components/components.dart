@@ -22,15 +22,15 @@ class CustomButton extends StatelessWidget {
         onPressed();
       },
       child: Material(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(8),
         elevation: 4,
         child: Container(
           width: width,
-          padding: const EdgeInsets.all(13),
+          padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: isOutlined ? Colors.white : kTextColor,
-            border: Border.all(color: kTextColor, width: 2.5),
-            borderRadius: BorderRadius.circular(30),
+            border: Border.all(color: kTextColor, width: 1.5),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Center(
             child: Text(
@@ -76,9 +76,7 @@ class ScreenTitle extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
-        fontSize: 40,
-        fontWeight: FontWeight.bold,
-      ),
+          fontSize: 40, fontWeight: FontWeight.bold, color: kBackgroundColor),
     );
   }
 }
@@ -92,8 +90,9 @@ class CustomTitle extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
+        fontFamily: "Roboto",
         color: kBackgroundColor,
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -111,14 +110,54 @@ class CustomTextField extends StatelessWidget {
         horizontal: 30,
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          width: 2.5,
+          width: 2,
           color: kTextColor,
         ),
       ),
       child: textField,
     );
+  }
+}
+
+class CustomFormField extends StatelessWidget {
+  CustomFormField(
+      {super.key,
+      required this.textField,
+      required this.formTitle,
+      this.height = 50});
+  final TextField textField;
+  final String formTitle;
+  final double height;
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      SizedBox(
+        height: 20,
+      ),
+      Text(
+        formTitle,
+        style: TextStyle(color: kTextColor.withOpacity(1), fontSize: 20),
+      ),
+      SizedBox(
+        height: 5,
+      ),
+      Container(
+        height: height,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(
+            width: 2,
+            color: kBackgroundColor,
+          ),
+        ),
+        child: textField,
+      ),
+    ]);
   }
 }
 
@@ -152,7 +191,10 @@ class CustomBottomScreen extends StatelessWidget {
               onTap: () {
                 questionPressed();
               },
-              child: Text(question),
+              child: Text(
+                question,
+                style: TextStyle(color: kTextColor),
+              ),
             ),
           ),
         ),
@@ -237,12 +279,15 @@ Container CustomContainer({required String title, required IconData icon}) {
       borderRadius: BorderRadius.circular(10),
     ),
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         CustomTitle(title: title),
+        SizedBox(
+          width: 60,
+        ),
         Icon(
           icon,
           color: kBackgroundColor,
+          size: 34,
         ),
       ],
     ),

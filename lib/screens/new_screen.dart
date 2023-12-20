@@ -18,14 +18,9 @@ class _NewScreenState extends State<NewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.white,
             automaticallyImplyLeading: false,
             title: Text(
               "Novels",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
             )),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -34,9 +29,8 @@ class _NewScreenState extends State<NewScreen> {
             child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 400,
-                    childAspectRatio: 2,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 10),
+                    childAspectRatio: 2.1,
+                    mainAxisSpacing: 15),
                 itemCount: myNovels.length,
                 itemBuilder: (BuildContext ctx, index) {
                   return NovelCard();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:semster_project/screens/genres_screens.dart';
 import 'package:semster_project/screens/home_screen.dart';
+import 'package:semster_project/screens/writer_screen.dart';
 import '../components/components.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -11,7 +12,6 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -19,7 +19,7 @@ class WelcomeScreen extends StatelessWidget {
             GestureDetector(
               child: CustomContainer(title: "Writer", icon: Icons.edit),
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HomeScreen())),
+                  MaterialPageRoute(builder: (context) => WriteScreen())),
             ),
             SizedBox(
               height: 50,
