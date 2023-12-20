@@ -1,21 +1,19 @@
 import 'package:flutter/scheduler.dart';
 
 class Novel {
-  Novel(
-      {required this.title,
-      required this.writer,
-      required this.novel_url,
-      required this.image_url,
-      required this.description,
-      required this.id});
+  Novel({
+    required this.title,
+    required this.writer,
+    required this.novel_url,
+    required this.image_url,
+    required this.description,
+  });
 
   String title;
   String writer;
   String novel_url;
   String image_url;
   String description;
-
-  int id;
 
   factory Novel.fromJson(Map<String, dynamic> json) {
     return Novel(
@@ -24,7 +22,6 @@ class Novel {
       novel_url: json['novel_url'],
       image_url: json['image_url'],
       description: json['description'],
-      id: json['id'],
     );
   }
 }

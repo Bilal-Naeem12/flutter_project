@@ -153,7 +153,7 @@ class _WriteScreenState extends State<WriteScreen> {
                                         "_novel_url": _novel_url.toString(),
                                         "_image_url": _image_url.toString(),
                                         "_description": _description.toString(),
-                                        id: int.parse(id)
+                                        "id": int.parse(id)
                                       });
                                       // If the form is valid, display a snackbar. In the real world,
                                       showAlert(
