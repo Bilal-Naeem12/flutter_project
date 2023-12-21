@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:semster_project/constants.dart';
+import 'package:semster_project/models/genre.dart';
 import 'package:semster_project/screens/new_screen.dart';
 import '../components/components.dart';
+import '../sevice/database.dart';
 
 class Genres_Screen extends StatefulWidget {
   const Genres_Screen({super.key});
@@ -11,9 +13,16 @@ class Genres_Screen extends StatefulWidget {
 }
 
 class _Genres_ScreenState extends State<Genres_Screen> {
-  final List<Map> myProducts =
-      List.generate(10, (index) => {"id": index, "name": "Product $index"})
-          .toList();
+  List<Genre> genreList = [Genre()];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DatabaseMethods()
+        .fetchGenre()
+        .then((value) => setState(() => genreList = value));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,24 +41,25 @@ class _Genres_ScreenState extends State<Genres_Screen> {
                 childAspectRatio: 2,
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 10),
-            itemCount: myProducts.length,
+            itemCount: genreList.length,
             itemBuilder: (BuildContext ctx, index) {
               return GestureDetector(
                 onTap: () => PushNextScreen(
                     context: context,
-                    widget: NewScreen(text: index.toString())),
+                    widget: NewScreen(
+                      genre: genreList[index].genre,
+                    )),
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: kBackgroundColor,
                       image: DecorationImage(
                           opacity: 1,
-                          image: NetworkImage(
-                              "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/fa0a2175305113.5c48c4442b973.jpg"),
+                          image: NetworkImage(genreList[index].image),
                           fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(8)),
                   child: Text(
-                    "Horror",
+                    genreList[index].genre,
                     style: TextStyle(
                         fontFamily: "Roboto",
                         fontStyle: FontStyle.italic,

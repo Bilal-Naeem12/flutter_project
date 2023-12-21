@@ -19,12 +19,6 @@ class WriteScreen extends StatefulWidget {
 }
 
 class _WriteScreenState extends State<WriteScreen> {
-  Controller() {
-    setState(() {
-      _write_name = "sadqa";
-    });
-  }
-
   final _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   final databaseRef = FirebaseDatabase.instance.ref("NOVEL");
@@ -33,7 +27,8 @@ class _WriteScreenState extends State<WriteScreen> {
   String _novel_url = "";
   String _image_url = "";
   String _description = "";
-
+  String dropdownValue = "Horror";
+  List<String> list = <String>['Horror', 'Adventure', 'Romance', 'Thrill'];
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -115,15 +110,68 @@ class _WriteScreenState extends State<WriteScreen> {
                                   validator: (value) => TextValidator(value),
                                 ),
                               ),
+                              SizedBox(
+                                height: 25,
+                              ),
+                              DropdownMenu<String>(
+                                initialSelection: dropdownValue,
+                                errorText: "Select one genre",
+                                width: 360,
+                                textStyle: TextStyle(color: kBackgroundColor),
+                                inputDecorationTheme: InputDecorationTheme(
+                                  errorStyle: TextStyle(
+                                      fontSize: 15, color: kErrorColor),
+                                  labelStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w800),
+                                  hintStyle: TextStyle(
+                                      fontSize: 15,
+                                      color: kBackgroundColor.withOpacity(0.7)),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(color: kTextColor),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(color: kErrorColor),
+                                  ),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.auto,
+                                ),
+                                menuStyle: MenuStyle(
+                                  backgroundColor:
+                                      MaterialStatePropertyAll<Color>(
+                                          kTextColor),
+                                ),
+                                label: Text("Genre"),
+                                onSelected: (String? value) {
+                                  // This is called when the user selects an item.
+                                  setState(() {
+                                    dropdownValue = value!;
+                                  });
+                                },
+                                dropdownMenuEntries: list
+                                    .map<DropdownMenuEntry<String>>(
+                                        (String value) {
+                                  return DropdownMenuEntry<String>(
+                                      value: value, label: value);
+                                }).toList(),
+                              ),
                               CustomFormField(
                                 textFormField: TextFormField(
                                   onChanged: (val) => _description = val,
-                                  maxLength: 100,
+                                  maxLength: 250,
                                   maxLines: 8,
                                   keyboardType: TextInputType.multiline,
                                   style: TextStyle(color: Colors.white),
                                   decoration: kTextInputDecorationWriter(
-                                      "Description", "Enter Novel Descripton"),
+                                      "Description", "Enter Novel Descripton",
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always),
                                   cursorColor: kTextColor,
                                   // The validator receives the text that the user has entered.
                                   validator: (value) => TextValidator(value),
@@ -146,10 +194,11 @@ class _WriteScreenState extends State<WriteScreen> {
 
                                       databaseRef
                                           .child('novels')
+                                          .child(dropdownValue)
                                           .child(_title.toString())
                                           .set({
                                         "_title": _title.toString(),
-                                        "_write_name": "Asdasd",
+                                        "_write_name": _write_name.toString(),
                                         "_novel_url": _novel_url.toString(),
                                         "_image_url": _image_url.toString(),
                                         "_description": _description.toString(),

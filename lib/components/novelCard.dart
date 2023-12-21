@@ -18,7 +18,10 @@ class _NovelCardState extends State<NovelCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => PDF_Reader())),
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  PDF_Reader(novel_url: widget.novel.novel_url))),
       child: Card(
         shadowColor: kTextColor,
         color: kBackgroundColor,

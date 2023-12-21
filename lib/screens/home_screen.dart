@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
                 height: 25,
               ),
               const Text(
-                'Welcome to Tasky, where you manage your daily tasks',
+                'Welcome to Library, where you can read and write',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.grey,

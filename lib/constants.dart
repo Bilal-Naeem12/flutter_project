@@ -9,7 +9,8 @@ const InputDecoration kTextInputDecoration = InputDecoration(
   // ),
 );
 
-InputDecoration kTextInputDecorationWriter(labelText, hintText) {
+InputDecoration kTextInputDecorationWriter(labelText, hintText,
+    {floatingLabelBehavior = FloatingLabelBehavior.auto}) {
   return InputDecoration(
     errorStyle: TextStyle(fontSize: 15, color: kErrorColor),
     labelStyle: TextStyle(
@@ -29,6 +30,6 @@ InputDecoration kTextInputDecorationWriter(labelText, hintText) {
     ),
     labelText: labelText,
     hintText: hintText,
-    floatingLabelBehavior: FloatingLabelBehavior.auto,
+    floatingLabelBehavior: floatingLabelBehavior,
   );
 }

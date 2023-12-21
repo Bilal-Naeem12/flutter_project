@@ -29,13 +29,18 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(
               seedColor: kTextColor,
               primary: kTextColor,
-              secondary: kTextColor),
+              secondary: kTextColor,
+              onBackground: kTextColor,
+              onPrimaryContainer: kTextColor,
+              inversePrimary: kBackgroundColor,
+              background: kTextColor,
+              secondaryContainer: kTextColor),
           appBarTheme: AppBarTheme(
             backgroundColor: Colors.black,
             centerTitle: true,
           ),
           hintColor: kBackgroundColor,
-          scaffoldBackgroundColor: Color.fromARGB(92, 162, 168, 160),
+          scaffoldBackgroundColor: Color.fromARGB(92, 98, 107, 95),
           textTheme: const TextTheme(
             bodyMedium: TextStyle(
               fontFamily: 'Ubuntu',
@@ -48,10 +53,7 @@ class MyApp extends StatelessWidget {
         SignUpScreen.id: (context) => const SignUpScreen(),
         WelcomeScreen.id: (context) => const WelcomeScreen(),
         SplashPage.id: (context) => const SplashPage(),
-        PDF_Reader.id: (context) => const PDF_Reader(),
-        NewScreen.id: (context) => NewScreen(
-              text: "asdsad",
-            )
+        NewScreen.id: (context) => NewScreen()
       },
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -8,15 +10,20 @@ import 'package:semster_project/components/novelCard.dart';
 import 'package:semster_project/models/novel.dart';
 
 class NewScreen extends StatefulWidget {
-  NewScreen({super.key, required this.text});
+  NewScreen({super.key, this.genre = "Horror"});
   static String id = "new_screen";
-  String text;
+  String genre;
   @override
   State<NewScreen> createState() => _NewScreenState();
 }
 
 class _NewScreenState extends State<NewScreen> {
   final databaseRef = FirebaseDatabase.instance.ref("NOVEL").child("novels");
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +35,11 @@ class _NewScreenState extends State<NewScreen> {
         body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: FirebaseAnimatedList(
-              query: databaseRef,
+              query: databaseRef.child(widget.genre),
               itemBuilder: (context, snapshot, animation, index) {
+                if (snapshot.hasChild("Genre") || snapshot.hasChild("Image")) {
+                  return Text("");
+                }
                 String description =
                     snapshot.child('_description').value.toString();
                 String img = snapshot.child('_image_url').value.toString();
