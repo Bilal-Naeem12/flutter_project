@@ -115,7 +115,6 @@ class _WriteScreenState extends State<WriteScreen> {
                               ),
                               DropdownMenu<String>(
                                 initialSelection: dropdownValue,
-                                errorText: "Select one genre",
                                 width: 360,
                                 textStyle: TextStyle(color: kBackgroundColor),
                                 inputDecorationTheme: InputDecorationTheme(
