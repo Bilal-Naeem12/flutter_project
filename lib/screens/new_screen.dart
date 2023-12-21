@@ -1,41 +1,63 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/components/novelCard.dart';
+import 'package:semster_project/models/novel.dart';
 
 class NewScreen extends StatefulWidget {
-  NewScreen({super.key, required this.text});
+  NewScreen({super.key, this.genre = "Horror"});
   static String id = "new_screen";
-  String text;
+  String genre;
   @override
   State<NewScreen> createState() => _NewScreenState();
 }
 
 class _NewScreenState extends State<NewScreen> {
-  final List<Map> myNovels =
-      List.generate(10, (index) => {"id": index, "name": "Product $index"})
-          .toList();
+  final databaseRef = FirebaseDatabase.instance.ref("NOVEL").child("novels");
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Text(
-              "Novels",
-            )),
+            title: ScreenTitle(
+          title: "Novels",
+        )),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-              child: Container(
-            child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 400,
-                    childAspectRatio: 2.1,
-                    mainAxisSpacing: 15),
-                itemCount: myNovels.length,
-                itemBuilder: (BuildContext ctx, index) {
-                  return NovelCard();
-                }),
-          )),
-        ));
+            padding: const EdgeInsets.all(8.0),
+            child: FirebaseAnimatedList(
+              query: databaseRef.child(widget.genre),
+              itemBuilder: (context, snapshot, animation, index) {
+                if (snapshot.hasChild("Genre") || snapshot.hasChild("Image")) {
+                  return Text("");
+                }
+                String description =
+                    snapshot.child('_description').value.toString();
+                String img = snapshot.child('_image_url').value.toString();
+                String novel = snapshot.child('_novel_url').value.toString();
+                String title = snapshot.child('_title').value.toString();
+                String writer_name =
+                    snapshot.child('_writer_naem').value.toString();
+                String id = snapshot.child('1402954').value.toString();
+                return NovelCard(
+                  novel: Novel(
+                    description: description,
+                    title: title,
+                    image_url: img,
+                    novel_url: novel,
+                    writer: writer_name,
+                  ),
+                );
+              },
+            )));
   }
 }

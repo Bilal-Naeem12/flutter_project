@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semster_project/components/validatorFucntions.dart';
 import '../constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -76,7 +77,7 @@ class ScreenTitle extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
-          fontSize: 40, fontWeight: FontWeight.bold, color: kBackgroundColor),
+          fontSize: 35, fontWeight: FontWeight.bold, color: kBackgroundColor),
     );
   }
 }
@@ -121,42 +122,26 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
-class CustomFormField extends StatelessWidget {
-  CustomFormField(
-      {super.key,
-      required this.textField,
-      required this.formTitle,
-      this.height = 50});
-  final TextField textField;
-  final String formTitle;
-  final double height;
+class CustomFormField extends StatefulWidget {
+  CustomFormField({
+    super.key,
+    required this.textFormField,
+  });
+
+  final TextFormField textFormField;
+
+  @override
+  State<CustomFormField> createState() => _CustomFormFieldState();
+}
+
+class _CustomFormFieldState extends State<CustomFormField> {
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Column(children: [
       SizedBox(
         height: 20,
       ),
-      Text(
-        formTitle,
-        style: TextStyle(color: kTextColor.withOpacity(1), fontSize: 20),
-      ),
-      SizedBox(
-        height: 5,
-      ),
-      Container(
-        height: height,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            width: 2,
-            color: kBackgroundColor,
-          ),
-        ),
-        child: textField,
-      ),
+      widget.textFormField
     ]);
   }
 }
@@ -248,10 +233,11 @@ Alert showAlert({
   required String title,
   required String desc,
   required BuildContext context,
+  AlertType alertType = AlertType.error,
 }) {
   return Alert(
     context: context,
-    type: AlertType.error,
+    type: alertType,
     title: title,
     desc: desc,
     buttons: [

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:semster_project/components/components.dart';
+import 'package:semster_project/components/validatorFucntions.dart';
 import 'package:semster_project/constants.dart';
+import 'package:semster_project/models/novel.dart';
 import 'package:semster_project/screens/home_screen.dart';
 import 'package:semster_project/screens/login_screen.dart';
 import 'package:semster_project/screens/welcome_screen.dart';
@@ -19,15 +21,14 @@ class WriteScreen extends StatefulWidget {
 class _WriteScreenState extends State<WriteScreen> {
   final _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
-  final databaseRef = FirebaseDatabase.instance.ref("writers");
-  late String _title;
-  late String _write_name;
-  late String _novel_url;
-  late String _image_url;
-  late String _description;
-  bool _saving = false;
-  String id = "";
-
+  final databaseRef = FirebaseDatabase.instance.ref("NOVEL");
+  String _title = "";
+  String _write_name = "";
+  String _novel_url = "";
+  String _image_url = "";
+  String _description = "";
+  String dropdownValue = "Horror";
+  List<String> list = <String>['Horror', 'Adventure', 'Romance', 'Thrill'];
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -36,182 +37,203 @@ class _WriteScreenState extends State<WriteScreen> {
         return false;
       },
       child: Scaffold(
-        body: LoadingOverlay(
-          isLoading: _saving,
-          child: SafeArea(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 360,
-                      child: Column(
-                        children: [
-                          const ScreenTitle(title: 'Writer Form'),
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 20,
+        appBar: AppBar(
+          title: ScreenTitle(title: 'Writer Form'),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 360,
+                    child: Column(
+                      children: [
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              CustomFormField(
+                                textFormField: TextFormField(
+                                  onChanged: (val) => _title = val,
+
+                                  keyboardType: TextInputType.multiline,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: kTextInputDecorationWriter(
+                                      "Title", "Enter Novel Title"),
+                                  cursorColor: kTextColor,
+                                  // The validator receives the text that the user has entered.
+                                  validator: (value) => TextValidator(value),
                                 ),
-                                CustomFormField(
-                                  formTitle: "Title",
-                                  textField: TextField(
-                                    decoration:
-                                        kTextInputDecorationWriter.copyWith(
-                                      hintText: 'Enter novel\'s title',
-                                    ),
-                                    onChanged: (value) {
-                                      _title = value;
-                                    },
-                                    style: const TextStyle(
-                                        fontSize: 20, color: kBackgroundColor),
+                              ),
+                              CustomFormField(
+                                textFormField: TextFormField(
+                                  onChanged: (val) => _write_name = val,
+
+                                  keyboardType: TextInputType.multiline,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: kTextInputDecorationWriter(
+                                      "Writer Name",
+                                      "Enter Novel\'s Write Name"),
+                                  cursorColor: kTextColor,
+                                  // The validator receives the text that the user has entered.
+                                  validator: (value) => TextValidator(value),
+                                ),
+                              ),
+                              CustomFormField(
+                                textFormField: TextFormField(
+                                  onChanged: (val) => _novel_url = val,
+
+                                  keyboardType: TextInputType.multiline,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: kTextInputDecorationWriter(
+                                      "Novel URL", "Enter Novel URL"),
+                                  cursorColor: kTextColor,
+                                  // The validator receives the text that the user has entered.
+                                  validator: (value) => TextValidator(value),
+                                ),
+                              ),
+                              CustomFormField(
+                                textFormField: TextFormField(
+                                  onChanged: (val) => _image_url = val,
+
+                                  keyboardType: TextInputType.multiline,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: kTextInputDecorationWriter(
+                                      "Image URL", "Enter Image URL"),
+                                  cursorColor: kTextColor,
+                                  // The validator receives the text that the user has entered.
+                                  validator: (value) => TextValidator(value),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 25,
+                              ),
+                              DropdownMenu<String>(
+                                initialSelection: dropdownValue,
+                                errorText: "Select one genre",
+                                width: 360,
+                                textStyle: TextStyle(color: kBackgroundColor),
+                                inputDecorationTheme: InputDecorationTheme(
+                                  errorStyle: TextStyle(
+                                      fontSize: 15, color: kErrorColor),
+                                  labelStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w800),
+                                  hintStyle: TextStyle(
+                                      fontSize: 15,
+                                      color: kBackgroundColor.withOpacity(0.7)),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                ),
-                                CustomFormField(
-                                  formTitle: "Writer Name",
-                                  textField: TextField(
-                                    decoration:
-                                        kTextInputDecorationWriter.copyWith(
-                                      hintText: 'Enter novel\'s writer name',
-                                    ),
-                                    onChanged: (value) {
-                                      _write_name = value;
-                                    },
-                                    style: const TextStyle(
-                                        fontSize: 20, color: kBackgroundColor),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(color: kTextColor),
                                   ),
-                                ),
-                                CustomFormField(
-                                  formTitle: "Novel URL",
-                                  textField: TextField(
-                                    decoration:
-                                        kTextInputDecorationWriter.copyWith(
-                                      hintText: 'Enter novel\'s URL',
-                                    ),
-                                    onChanged: (value) {
-                                      _novel_url = value;
-                                    },
-                                    style: const TextStyle(
-                                        fontSize: 20, color: kBackgroundColor),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(color: kErrorColor),
                                   ),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.auto,
                                 ),
-                                CustomFormField(
-                                  formTitle: "Image URL",
-                                  textField: TextField(
-                                    decoration:
-                                        kTextInputDecorationWriter.copyWith(
-                                      hintText: 'Enter novel\'s image URL',
-                                    ),
-                                    onChanged: (value) {
-                                      _image_url = value;
-                                    },
-                                    style: const TextStyle(
-                                        fontSize: 20, color: kBackgroundColor),
-                                  ),
+                                menuStyle: MenuStyle(
+                                  backgroundColor:
+                                      MaterialStatePropertyAll<Color>(
+                                          kTextColor),
                                 ),
-                                CustomFormField(
-                                  height: 200,
-                                  formTitle: "Description",
-                                  textField: TextField(
-                                    onChanged: (value) {
-                                      _description = value;
-                                    },
-                                    maxLines: null,
-                                    expands: true,
-                                    keyboardType: TextInputType.multiline,
-                                    decoration:
-                                        kTextInputDecorationWriter.copyWith(
-                                            hintText:
-                                                'Enter description of the novel'),
-                                    style: const TextStyle(
-                                        fontSize: 20, color: kBackgroundColor),
-                                  ),
+                                label: Text("Genre"),
+                                onSelected: (String? value) {
+                                  // This is called when the user selects an item.
+                                  setState(() {
+                                    dropdownValue = value!;
+                                  });
+                                },
+                                dropdownMenuEntries: list
+                                    .map<DropdownMenuEntry<String>>(
+                                        (String value) {
+                                  return DropdownMenuEntry<String>(
+                                      value: value, label: value);
+                                }).toList(),
+                              ),
+                              CustomFormField(
+                                textFormField: TextFormField(
+                                  onChanged: (val) => _description = val,
+                                  maxLength: 250,
+                                  maxLines: 8,
+                                  keyboardType: TextInputType.multiline,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: kTextInputDecorationWriter(
+                                      "Description", "Enter Novel Descripton",
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always),
+                                  cursorColor: kTextColor,
+                                  // The validator receives the text that the user has entered.
+                                  validator: (value) => TextValidator(value),
                                 ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                CustomBottomScreen(
-                                  textButton: 'Submit',
-                                  heroTag: 'Submit',
-                                  question: '',
-                                  buttonPressed: () async {
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                    setState(() {
-                                      _saving = true;
-                                    });
-                                    try {
-                                      id = DateTime.now()
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              CustomButton(
+                                width: 400,
+                                buttonText: "Submit",
+                                onPressed: () {
+                                  try {
+                                    if (_formKey.currentState!.validate()) {
+                                      String id = DateTime.now()
                                           .millisecondsSinceEpoch
                                           .abs()
                                           .toString()
                                           .substring(5);
 
                                       databaseRef
-                                          .child('writer')
+                                          .child('novels')
+                                          .child(dropdownValue)
                                           .child(_title.toString())
                                           .set({
-                                        "title": _title.toString(),
-                                        "writer": _write_name.toString(),
-                                        "novel_url": _novel_url.toString(),
-                                        "image_url": _image_url.toString(),
-                                        "description": _description.toString(),
-                                        "createdAt": DateTime.now().toString(),
-                                        "id": id
+                                        "_title": _title.toString(),
+                                        "_write_name": _write_name.toString(),
+                                        "_novel_url": _novel_url.toString(),
+                                        "_image_url": _image_url.toString(),
+                                        "_description": _description.toString(),
+                                        "id": int.parse(id)
                                       });
-
-                                      Alert(
-                                        closeIcon: Container(),
-                                        context: context,
-                                        buttons: [
-                                          DialogButton(
-                                            onPressed: () {},
-                                            width: 120,
-                                            child: Text(
-                                              "Submitted",
-                                              style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20),
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    } catch (e) {
-                                      // ignore: use_build_context_synchronously
-                                      signUpAlert(
-                                        context: context,
-                                        onPressed: () {
-                                          setState(() {
-                                            _saving = false;
-                                          });
-                                        },
-                                        title: 'Form Not Submit',
-                                        desc:
-                                            'Unable to submit the form please try again',
-                                        btnText: 'Try Now',
-                                      ).show();
+                                      // If the form is valid, display a snackbar. In the real world,
+                                      showAlert(
+                                              context: context,
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            WelcomeScreen()));
+                                              },
+                                              title: 'Congratulation ',
+                                              desc: 'Your Novel is Submitted',
+                                              alertType: AlertType.success)
+                                          .show();
                                     }
-                                  },
-                                  questionPressed: () {
-                                    signUpAlert(
-                                      onPressed: () async {},
-                                      title: 'RESET YOUR PASSWORD',
-                                      desc:
-                                          'Click on the button to reset your password',
-                                      btnText: 'Reset Now',
-                                      context: context,
-                                    ).show();
-                                  },
-                                ),
-                              ]),
-                        ],
-                      ),
+                                  } catch (e) {
+                                    print(e);
+                                  } // Validate returns true if the form is valid, or false otherwise.
+                                },
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

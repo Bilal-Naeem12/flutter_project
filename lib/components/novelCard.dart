@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/constants.dart';
+import 'package:semster_project/models/novel.dart';
 import 'package:semster_project/screens/pdf_read.dart';
 
 class NovelCard extends StatefulWidget {
-  const NovelCard({super.key});
-
+  const NovelCard({super.key, required this.novel});
+  final Novel novel;
   @override
   State<NovelCard> createState() => _NovelCardState();
 }
@@ -17,7 +18,10 @@ class _NovelCardState extends State<NovelCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => PDF_Reader())),
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  PDF_Reader(novel_url: widget.novel.novel_url))),
       child: Card(
         shadowColor: kTextColor,
         color: kBackgroundColor,
@@ -27,9 +31,9 @@ class _NovelCardState extends State<NovelCard> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.network(
-                "https://marketplace.canva.com/EAFfSnGl7II/2/0/1003w/canva-elegant-dark-woods-fantasy-photo-book-cover-vAt8PH1CmqQ.jpg",
+                widget.novel.image_url,
                 width: 100,
-                height: 250,
+                height: 180,
               ),
               SizedBox(
                 width: 10,
@@ -44,7 +48,7 @@ class _NovelCardState extends State<NovelCard> {
                         height: 20,
                       ),
                       Text(
-                        "Love By OLIVIA",
+                        widget.novel.title,
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -54,10 +58,7 @@ class _NovelCardState extends State<NovelCard> {
                         height: 10,
                       ),
                       new Text(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                                .toString()
-                                .substring(0, 120) +
-                            "....",
+                        widget.novel.description.toString() + "....",
                         style: TextStyle(
                           fontFamily: "Roboto",
                           color: const Color.fromARGB(255, 82, 80, 80),
