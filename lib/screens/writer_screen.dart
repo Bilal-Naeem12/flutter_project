@@ -1,15 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_overlay/loading_overlay.dart';
+
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/components/validatorFucntions.dart';
 import 'package:semster_project/constants.dart';
-import 'package:semster_project/models/novel.dart';
+
 import 'package:semster_project/screens/home_screen.dart';
-import 'package:semster_project/screens/login_screen.dart';
+
 import 'package:semster_project/screens/welcome_screen.dart';
+import 'package:semster_project/sevice/database.dart';
 
 class WriteScreen extends StatefulWidget {
   const WriteScreen({super.key});
@@ -28,7 +29,18 @@ class _WriteScreenState extends State<WriteScreen> {
   String _image_url = "";
   String _description = "";
   String dropdownValue = "Horror";
-  List<String> list = <String>['Horror', 'Adventure', 'Romance', 'Thrill'];
+  List<String> list = <String>[];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DatabaseMethods().fetchGenre().then((value) => value.forEach((element) {
+          setState(() {
+            list.add(element.genre);
+          });
+        }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
