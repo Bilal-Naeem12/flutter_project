@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:semster_project/models/active_user.dart';
+import 'package:semster_project/models/user.dart';
 import 'package:semster_project/screens/welcome_screen.dart';
 import 'package:semster_project/sevice/database.dart';
 
@@ -8,6 +10,10 @@ class AuthMethods {
   final FirebaseAuth auth = FirebaseAuth.instance;
   getCurrentUser() async {
     return auth.currentUser;
+  }
+
+  singout() async {
+    await auth.signOut();
   }
 
   signInWithGoogle(BuildContext context) async {
@@ -23,13 +29,18 @@ class AuthMethods {
     User? userDetails = result.user;
     Map<String, dynamic> userInfoMap = {
       "email": userDetails!.email,
-      "name": userDetails.displayName,
-      "imgUrl": userDetails.photoURL,
+      "username": userDetails.displayName,
+      "image": userDetails.photoURL,
       "id": userDetails.uid
     };
-
-    await DatabaseMethods().addUser(userDetails.uid, userInfoMap).then(
-        (value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => WelcomeScreen())));
+    ActiveUser.active = Usermodel(
+        username: userInfoMap["username"],
+        email: userInfoMap["email"],
+        password: "null",
+        image: userInfoMap["image"]);
+    await DatabaseMethods().addUser(userDetails.uid, userInfoMap).then((value) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
+    });
   }
 }

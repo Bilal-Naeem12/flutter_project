@@ -70,13 +70,6 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: () {},
-                    icon: CircleAvatar(
-                      radius: 25,
-                      child: Image.asset('assets/images/icons/facebook.png'),
-                    ),
-                  ),
-                  IconButton(
                     onPressed: () {
                       AuthMethods().signInWithGoogle(context);
                     },
@@ -84,19 +77,6 @@ class HomeScreen extends StatelessWidget {
                       radius: 25,
                       backgroundColor: Colors.transparent,
                       child: Image.asset('assets/images/icons/google.png'),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      databaseRef.child('user').child("Asdassdasd").set({
-                        "email": "Adssasdasd",
-                        "password": "asdasdsadsad",
-                        "createdAt": DateTime.now().toString()
-                      });
-                    },
-                    icon: CircleAvatar(
-                      radius: 25,
-                      child: Image.asset('assets/images/icons/linkedin.png'),
                     ),
                   ),
                 ],

@@ -4,6 +4,7 @@ import 'package:semster_project/components/components.dart';
 import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/user.dart';
 import 'package:semster_project/screens/login_screen.dart';
+import 'package:semster_project/sevice/auth.dart';
 
 const Color kBackgroundColor = Color.fromARGB(255, 255, 255, 255);
 const Color kTextColor = Color.fromARGB(255, 163, 211, 32);
@@ -46,7 +47,18 @@ Drawer kDrawer(BuildContext context) {
             decoration: BoxDecoration(
               color: kTextColor,
             ),
-            child: AvatarImage(img: ActiveUser.active!.image)),
+            child: Column(
+              children: [
+                AvatarImage(img: ActiveUser.active!.image),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  ActiveUser.active!.username,
+                  style: TextStyle(fontSize: 17),
+                )
+              ],
+            )),
         SizedBox(
           height: 10,
         ),
@@ -63,6 +75,10 @@ Drawer kDrawer(BuildContext context) {
           child: CustomButton(
             buttonText: "Logout",
             onPressed: () {
+              if (ActiveUser.active!.email.contains(".com")) {
+                AuthMethods().singout();
+                print("truuu kahaeee");
+              }
               ActiveUser.active = null;
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => LoginScreen()));

@@ -86,8 +86,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           buttonPressed: () async {
                             try {
                               if (_formKey.currentState!.validate()) {
-                                await DatabaseMethods().fetchUsers(_email).then(
-                                    (value) => setState(() => user = value));
+                                await DatabaseMethods()
+                                    .fetchUserOnce(email: _email)
+                                    .then((value) =>
+                                        setState(() => user = value));
 
                                 print(user.image);
                                 if (user.email == _email &&

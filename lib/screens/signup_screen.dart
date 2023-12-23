@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:semster_project/components/validatorFucntions.dart';
 import 'package:semster_project/models/user.dart';
 import 'package:semster_project/screens/avatar.dart';
+import 'package:semster_project/sevice/database.dart';
 import '../components/components.dart';
 import '../screens/home_screen.dart';
 import '../screens/login_screen.dart';
@@ -20,6 +21,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   late String _email;
+  late String _username;
   late String _password;
   late String _confirmPass;
   final _formKey = GlobalKey<FormState>();
@@ -78,6 +80,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     textFormField: TextFormField(
                                       style: TextStyle(color: kBackgroundColor),
                                       validator: (val) => TextValidator(val),
+                                      onChanged: (value) {
+                                        _username = value;
+                                      },
+                                      decoration: kTextInputDecorationWriter(
+                                          "Username", "Enter Username"),
+                                    ),
+                                  ),
+                                  CustomFormField(
+                                    textFormField: TextFormField(
+                                      style: TextStyle(color: kBackgroundColor),
+                                      validator: (val) => TextValidator(val),
                                       obscureText: true,
                                       onChanged: (value) {
                                         _password = value;
@@ -108,13 +121,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               textButton: 'Sign Up',
                               heroTag: 'signup_btn',
                               question: 'Have an account?',
-                              buttonPressed: () {
+                              buttonPressed: () async {
                                 try {
                                   if (_formKey.currentState!.validate()) {
                                     if (_confirmPass == _password) {
+                                      Usermodel defualt =
+                                          await DatabaseMethods().fetchUsers(
+                                              email: _email,
+                                              username: _username);
+
+                                      if (defualt.email == _email ||
+                                          defualt.username == _username) {
+                                        throw Exception();
+                                      }
                                       setState(() {
                                         user = Usermodel(
-                                            email: _email, password: _password);
+                                            username: _username,
+                                            email: _email,
+                                            password: _password);
                                       });
                                       Navigator.push(
                                           context,
@@ -135,7 +159,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     }
                                   }
                                 } catch (e) {
-                                  print(e);
+                                  signUpAlert(
+                                    onPressed: () async {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop();
+                                    },
+                                    title: 'User Already Exists',
+                                    btnText: 'Try Again',
+                                    desc: "Change Email Or Username",
+                                    context: context,
+                                  ).show();
                                 }
                               },
                               questionPressed: () async {

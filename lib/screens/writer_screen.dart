@@ -127,9 +127,9 @@ class _WriteScreenState extends State<WriteScreen> {
                                 errorStyle:
                                     TextStyle(fontSize: 15, color: kErrorColor),
                                 labelStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w800),
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
                                 hintStyle: TextStyle(
                                     fontSize: 15,
                                     color: kBackgroundColor.withOpacity(0.7)),

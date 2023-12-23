@@ -90,6 +90,7 @@ class _Avatar_ScreenState extends State<Avatar_Screen> {
                   databaseRef
                       .child(widget.user.email.replaceAll(".com", "_com"))
                       .set({
+                    "username": widget.user.username,
                     "email": widget.user.email,
                     "password": widget.user.password,
                     "image": imagePath,

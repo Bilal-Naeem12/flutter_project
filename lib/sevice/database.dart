@@ -55,8 +55,8 @@ class DatabaseMethods {
     return childList;
   }
 
-  fetchUsers(email) async {
-    Usermodel? childList;
+  fetchUsers({email, username}) async {
+    Usermodel childList = Usermodel(email: "", password: "", username: "");
     final databaseRef = FirebaseDatabase.instance.ref("user");
 
     DataSnapshot dataSnapshot = await databaseRef
@@ -65,13 +65,56 @@ class DatabaseMethods {
 
     if (dataSnapshot.exists) {
       childList = Usermodel(
+          username: dataSnapshot.child("username").value.toString(),
           email: dataSnapshot.child("email").value.toString(),
           password: dataSnapshot.child("password").value.toString(),
           image: dataSnapshot.child("image").value.toString());
     } else {
-      childList = null;
+      await fetchAllUsers(username).then((value) {
+        childList = value;
+        print(childList.username);
+      });
     }
 
+    return childList;
+  }
+
+  fetchAllUsers(username) async {
+    Usermodel childList = Usermodel(email: "", password: "", username: "");
+    final databaseRef = FirebaseDatabase.instance.ref("user/");
+
+    DataSnapshot dataSnapshot = await databaseRef.get();
+
+    if (dataSnapshot != null) {
+      dataSnapshot.children.forEach((element) {
+        if (element.child("username").value.toString() == username) {
+          childList = Usermodel(
+              username: element.child("username").value.toString(),
+              email: element.child("email").value.toString(),
+              password: element.child("password").value.toString(),
+              image: element.child("image").value.toString());
+        }
+      });
+    }
+
+    return childList;
+  }
+
+  fetchUserOnce({email}) async {
+    Usermodel childList = Usermodel(email: "", password: "", username: "");
+    final databaseRef = FirebaseDatabase.instance.ref("user");
+
+    DataSnapshot dataSnapshot = await databaseRef
+        .child(email.toString().replaceAll(".com", "_com"))
+        .get();
+
+    if (dataSnapshot.exists) {
+      childList = Usermodel(
+          username: dataSnapshot.child("username").value.toString(),
+          email: dataSnapshot.child("email").value.toString(),
+          password: dataSnapshot.child("password").value.toString(),
+          image: dataSnapshot.child("image").value.toString());
+    }
     return childList;
   }
 }
