@@ -25,7 +25,7 @@ class _NovelCardState extends State<NovelCard> {
       child: Card(
         shadowColor: kTextColor,
         color: kBackgroundColor,
-        elevation: 2,
+        elevation: 5,
         child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

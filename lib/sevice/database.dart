@@ -22,4 +22,19 @@ class DatabaseMethods {
 
     return childList;
   }
+
+  Future<List<String>> fetchGenreString() async {
+    List<String> childList = [];
+    final databaseRef = FirebaseDatabase.instance.ref("NOVEL/novels");
+
+    DataSnapshot dataSnapshot = await databaseRef.get();
+
+    if (dataSnapshot != null) {
+      dataSnapshot.children.forEach((element) {
+        childList.add(element.child("Genre").value.toString());
+      });
+    }
+
+    return childList;
+  }
 }
