@@ -7,7 +7,7 @@ TextValidator(value) {
   return null;
 }
 
-String? EmailValidator(String value) {
+EmailValidator(value) {
   if (value.isEmpty) {
     return 'Email is required';
   } else if (!isEmailValid(value)) {

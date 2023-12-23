@@ -27,6 +27,7 @@ class _Genres_ScreenState extends State<Genres_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: kDrawer(context),
       appBar: AppBar(
         title: ScreenTitle(
           title: "Genre",
@@ -52,12 +53,6 @@ class _Genres_ScreenState extends State<Genres_Screen> {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: kTextColor.withOpacity(1),
-                            offset: Offset(1, 1),
-                            blurRadius: 2)
-                      ],
                       color: kBackgroundColor,
                       image: DecorationImage(
                           opacity: 1,

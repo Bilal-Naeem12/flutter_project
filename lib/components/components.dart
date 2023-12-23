@@ -204,7 +204,7 @@ class CustomBottomScreen extends StatelessWidget {
 Alert signUpAlert({
   required Function onPressed,
   required String title,
-  required String desc,
+  String desc = "",
   required String btnText,
   required BuildContext context,
 }) {
