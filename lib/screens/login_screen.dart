@@ -1,5 +1,8 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:semster_project/components/validatorFucntions.dart';
+import 'package:semster_project/models/active_user.dart';
+import 'package:semster_project/models/user.dart';
+import 'package:semster_project/sevice/database.dart';
 import '../components/components.dart';
 import '../constants.dart';
 import 'welcome_screen.dart';
@@ -16,8 +19,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _auth = FirebaseAuth.instance;
-  final databaseRef = FirebaseDatabase.instance.ref("users");
+  final _formKey = GlobalKey<FormState>();
+  late Usermodel user;
   late String _email;
   late String _password;
   bool _saving = false;
@@ -46,28 +49,34 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const ScreenTitle(title: 'Login'),
-                        CustomTextField(
-                          textField: TextField(
-                              onChanged: (value) {
-                                _email = value;
-                              },
-                              style: const TextStyle(
-                                  fontSize: 20, color: kBackgroundColor),
-                              decoration: kTextInputDecoration.copyWith(
-                                  hintText: 'Email')),
-                        ),
-                        CustomTextField(
-                          textField: TextField(
-                            obscureText: true,
-                            onChanged: (value) {
-                              _password = value;
-                            },
-                            style: const TextStyle(
-                              color: kBackgroundColor,
-                              fontSize: 20,
-                            ),
-                            decoration: kTextInputDecoration.copyWith(
-                                hintText: 'Password'),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              CustomFormField(
+                                textFormField: TextFormField(
+                                  style: TextStyle(color: kBackgroundColor),
+                                  validator: (val) => EmailValidator(val),
+                                  onChanged: (value) {
+                                    _email = value;
+                                  },
+                                  decoration: kTextInputDecorationWriter(
+                                      "Email", "Enter Email"),
+                                ),
+                              ),
+                              CustomFormField(
+                                textFormField: TextFormField(
+                                  style: TextStyle(color: kBackgroundColor),
+                                  validator: (val) => TextValidator(val),
+                                  obscureText: true,
+                                  onChanged: (value) {
+                                    _password = value;
+                                  },
+                                  decoration: kTextInputDecorationWriter(
+                                      "Password", "Enter Password"),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         CustomBottomScreen(
@@ -75,36 +84,35 @@ class _LoginScreenState extends State<LoginScreen> {
                           heroTag: 'login_btn',
                           question: 'Forgot password?',
                           buttonPressed: () async {
-                            FocusManager.instance.primaryFocus?.unfocus();
-                            setState(() {
-                              _saving = true;
-                            });
                             try {
-                              UserCredential? firebaseUser =
-                                  await _auth.signInWithEmailAndPassword(
-                                      email: _email, password: _password);
+                              if (_formKey.currentState!.validate()) {
+                                await DatabaseMethods().fetchUsers(_email).then(
+                                    (value) => setState(() => user = value));
 
-                              if (context.mounted) {
-                                setState(() {
-                                  _saving = false;
-                                  Navigator.popAndPushNamed(
-                                      context, LoginScreen.id);
-                                });
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => WelcomeScreen()));
+                                print(user.image);
+                                if (user.email == _email &&
+                                    user.password == _password) {
+                                  ActiveUser.active = user;
+                                  setState(() {
+                                    _saving = false;
+                                  });
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              WelcomeScreen()));
+                                } else {
+                                  throw Exception();
+                                }
                               }
                             } catch (e) {
-                              // ignore: use_build_context_synchronously
                               signUpAlert(
                                 context: context,
                                 onPressed: () {
                                   setState(() {
                                     _saving = false;
+                                    Navigator.pop(context);
                                   });
-                                  Navigator.popAndPushNamed(
-                                      context, LoginScreen.id);
                                 },
                                 title: 'WRONG PASSWORD OR EMAIL',
                                 desc:

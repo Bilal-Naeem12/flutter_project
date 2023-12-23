@@ -7,6 +7,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/components/novelCard.dart';
+import 'package:semster_project/constants.dart';
 import 'package:semster_project/models/novel.dart';
 
 class NewScreen extends StatefulWidget {
@@ -28,6 +29,7 @@ class _NewScreenState extends State<NewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        endDrawer: kDrawer(context),
         appBar: AppBar(
             title: ScreenTitle(
           title: "Novels",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/firebase_options.dart';
+import 'package:semster_project/screens/avatar.dart';
 import 'package:semster_project/screens/new_screen.dart';
 import 'package:semster_project/screens/pdf_read.dart';
 import 'package:semster_project/screens/splash_screen.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+          drawerTheme: DrawerThemeData(backgroundColor: Colors.black),
           colorScheme: ColorScheme.fromSeed(
               seedColor: kTextColor,
               primary: kTextColor,
