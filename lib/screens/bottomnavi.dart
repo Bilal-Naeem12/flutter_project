@@ -34,6 +34,31 @@ class _BottomNavigation_ScreenState extends State<BottomNavigation_Screen> {
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
-        bottomNavigationBar: kBottomNavi(_selectedIndex, _onItemTapped));
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.book),
+              label: 'Library',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.apps_rounded),
+              label: 'Genre',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark),
+              label: 'Book Mark',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Me',
+              backgroundColor: Colors.black,
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: kTextColor,
+          onTap: _onItemTapped,
+          backgroundColor: Colors.black,
+          type: BottomNavigationBarType.shifting,
+        ));
   }
 }

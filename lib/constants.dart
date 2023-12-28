@@ -63,6 +63,7 @@ ListView kListView(BuildContext context) {
       SizedBox(
         height: 10,
       ),
+      klistTile(text: "Profile", onTap: () {}, icon: Icons.person),
       klistTile(text: "Setting", onTap: () {}, icon: Icons.settings),
       klistTile(
           text: "Become Writer",
@@ -71,7 +72,6 @@ ListView kListView(BuildContext context) {
                 MaterialPageRoute(builder: (context) => WriteScreen()));
           },
           icon: Icons.edit),
-      klistTile(text: "Profile", onTap: () {}, icon: Icons.person),
       klistTile(text: "About Us", onTap: () {}, icon: Icons.chat_bubble),
       klistTile(
           text: "Logout",
@@ -117,32 +117,5 @@ ListTile klistTile({text, onTap, icon}) {
         ),
       ],
     ),
-  );
-}
-
-BottomNavigationBar kBottomNavi(_selectedIndex, _onItemTapped) {
-  return BottomNavigationBar(
-    backgroundColor: Colors.black,
-    items: const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
-        icon: Icon(Icons.book),
-        label: 'Library',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.apps_rounded),
-        label: 'Genre',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.bookmark),
-        label: 'Book Mark',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.person),
-        label: 'Me',
-      ),
-    ],
-    currentIndex: _selectedIndex,
-    selectedItemColor: kTextColor,
-    onTap: _onItemTapped,
   );
 }

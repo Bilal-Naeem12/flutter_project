@@ -28,8 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           bottomNavigationBarTheme: BottomNavigationBarThemeData(
-              backgroundColor: Color.fromARGB(255, 0, 0, 0),
-              unselectedItemColor: kBackgroundColor),
+              backgroundColor: Colors.black, unselectedItemColor: Colors.black),
           drawerTheme: DrawerThemeData(backgroundColor: Colors.black),
           colorScheme: ColorScheme.fromSeed(
               seedColor: kTextColor,

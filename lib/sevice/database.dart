@@ -139,11 +139,8 @@ class DatabaseMethods {
                   image_url: element1.child("_image_url").value.toString(),
                   description:
                       element1.child("_description").value.toString()));
-              print(element1.child("_title").value.toString());
             }
-          } catch (e) {
-            print(e);
-          }
+          } catch (e) {}
         });
       });
     }
