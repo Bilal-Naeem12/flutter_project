@@ -58,7 +58,8 @@ class _NovelCardState extends State<NovelCard> {
                         height: 10,
                       ),
                       new Text(
-                        widget.novel.description.toString() + "....",
+                        widget.novel.description.toString().substring(0, 100) +
+                            "....",
                         style: TextStyle(
                           fontFamily: "Roboto",
                           color: const Color.fromARGB(255, 82, 80, 80),

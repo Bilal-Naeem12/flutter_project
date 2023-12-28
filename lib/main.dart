@@ -8,7 +8,7 @@ import 'package:semster_project/screens/splash_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/login_screen.dart';
 import '../screens/signup_screen.dart';
-import 'screens/welcome_screen.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              backgroundColor: Color.fromARGB(255, 0, 0, 0),
+              unselectedItemColor: kBackgroundColor),
           drawerTheme: DrawerThemeData(backgroundColor: Colors.black),
           colorScheme: ColorScheme.fromSeed(
               seedColor: kTextColor,
@@ -42,7 +45,7 @@ class MyApp extends StatelessWidget {
             centerTitle: true,
           ),
           hintColor: kBackgroundColor,
-          scaffoldBackgroundColor: Color.fromARGB(92, 98, 107, 95),
+          scaffoldBackgroundColor: Color.fromARGB(255, 29, 29, 29),
           textTheme: const TextTheme(
             bodyMedium: TextStyle(
               fontFamily: 'Ubuntu',
@@ -53,7 +56,6 @@ class MyApp extends StatelessWidget {
         HomeScreen.id: (context) => HomeScreen(),
         LoginScreen.id: (context) => const LoginScreen(),
         SignUpScreen.id: (context) => const SignUpScreen(),
-        WelcomeScreen.id: (context) => const WelcomeScreen(),
         SplashPage.id: (context) => const SplashPage(),
         NewScreen.id: (context) => NewScreen()
       },

@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:semster_project/components/avatarImg.dart';
 import 'package:semster_project/models/genre.dart';
+import 'package:semster_project/models/novel.dart';
 import 'package:semster_project/models/user.dart';
 
 class DatabaseMethods {
@@ -115,6 +116,38 @@ class DatabaseMethods {
           password: dataSnapshot.child("password").value.toString(),
           image: dataSnapshot.child("image").value.toString());
     }
+    return childList;
+  }
+
+  Future<List<Novel>> fetchNewNovels() async {
+    List<Novel> childList = [];
+    final databaseRef = FirebaseDatabase.instance.ref("NOVEL/novels");
+
+    DataSnapshot dataSnapshot = await databaseRef.get();
+
+    if (dataSnapshot != null) {
+      dataSnapshot.children.forEach((element) {
+        element.children.forEach((element1) {
+          try {
+            DateTime fileCreationDateTime =
+                DateTime.parse(element1.child("createdAt").value.toString());
+            if (DateTime.now().difference(fileCreationDateTime).inDays <= 2) {
+              childList.add(Novel(
+                  title: element1.child("_title").value.toString(),
+                  writer: element1.child("_writer_name").value.toString(),
+                  novel_url: element1.child("_novel_url").value.toString(),
+                  image_url: element1.child("_image_url").value.toString(),
+                  description:
+                      element1.child("_description").value.toString()));
+              print(element1.child("_title").value.toString());
+            }
+          } catch (e) {
+            print(e);
+          }
+        });
+      });
+    }
+
     return childList;
   }
 }

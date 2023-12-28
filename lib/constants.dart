@@ -4,6 +4,7 @@ import 'package:semster_project/components/components.dart';
 import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/user.dart';
 import 'package:semster_project/screens/login_screen.dart';
+import 'package:semster_project/screens/writer_screen.dart';
 import 'package:semster_project/sevice/auth.dart';
 
 const Color kBackgroundColor = Color.fromARGB(255, 255, 255, 255);
@@ -39,54 +40,52 @@ InputDecoration kTextInputDecorationWriter(labelText, hintText,
   );
 }
 
-Drawer kDrawer(BuildContext context) {
-  return Drawer(
-    child: ListView(
-      children: [
-        DrawerHeader(
-            decoration: BoxDecoration(
-              color: kTextColor,
-            ),
-            child: Column(
-              children: [
-                AvatarImage(img: ActiveUser.active!.image),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  ActiveUser.active!.username,
-                  style: TextStyle(fontSize: 17),
-                )
-              ],
-            )),
-        SizedBox(
-          height: 10,
-        ),
-        klistTile(text: "Setting", onTap: () {}, icon: Icons.settings),
-        SizedBox(
-          height: 20,
-        ),
-        klistTile(text: "Profile", onTap: () {}, icon: Icons.person),
-        SizedBox(
-          height: 300,
-        ),
-        Container(
-          width: 100,
-          child: CustomButton(
-            buttonText: "Logout",
-            onPressed: () {
-              if (ActiveUser.active!.email.contains(".com")) {
-                AuthMethods().singout();
-                print("truuu kahaeee");
-              }
-              ActiveUser.active = null;
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
-            },
+ListView kListView(BuildContext context) {
+  return ListView(
+    children: [
+      DrawerHeader(
+          decoration: BoxDecoration(
+            color: kTextColor,
           ),
-        )
-      ],
-    ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AvatarImage(img: ActiveUser.active!.image),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
+                ActiveUser.active!.username,
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
+              )
+            ],
+          )),
+      SizedBox(
+        height: 10,
+      ),
+      klistTile(text: "Setting", onTap: () {}, icon: Icons.settings),
+      klistTile(
+          text: "Become Writer",
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => WriteScreen()));
+          },
+          icon: Icons.edit),
+      klistTile(text: "Profile", onTap: () {}, icon: Icons.person),
+      klistTile(text: "About Us", onTap: () {}, icon: Icons.chat_bubble),
+      klistTile(
+          text: "Logout",
+          onTap: () {
+            if (ActiveUser.active!.email.contains(".com")) {
+              AuthMethods().singout();
+              print("truuu kahaeee");
+            }
+            ActiveUser.active = null;
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LoginScreen()));
+          },
+          icon: Icons.logout),
+    ],
   );
 }
 
@@ -96,12 +95,11 @@ TextStyle ktextStyle() {
 
 ListTile klistTile({text, onTap, icon}) {
   return ListTile(
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(60))),
-    tileColor: kBackgroundColor,
+    visualDensity: VisualDensity(vertical: 4),
+    tileColor: Color.fromARGB(255, 29, 29, 29),
     onTap: onTap,
     trailing: Icon(
-      Icons.arrow_forward,
+      Icons.arrow_forward_ios,
       color: kTextColor,
     ),
     title: Row(
@@ -119,5 +117,32 @@ ListTile klistTile({text, onTap, icon}) {
         ),
       ],
     ),
+  );
+}
+
+BottomNavigationBar kBottomNavi(_selectedIndex, _onItemTapped) {
+  return BottomNavigationBar(
+    backgroundColor: Colors.black,
+    items: const <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: Icon(Icons.book),
+        label: 'Library',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.apps_rounded),
+        label: 'Genre',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.bookmark),
+        label: 'Book Mark',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.person),
+        label: 'Me',
+      ),
+    ],
+    currentIndex: _selectedIndex,
+    selectedItemColor: kTextColor,
+    onTap: _onItemTapped,
   );
 }

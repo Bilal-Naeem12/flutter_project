@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/user.dart';
-import 'package:semster_project/screens/welcome_screen.dart';
+import 'package:semster_project/screens/bottomnavi.dart';
+import 'package:semster_project/screens/library_screen.dart';
+
 import 'package:semster_project/sevice/database.dart';
 
 class AuthMethods {
@@ -39,8 +41,8 @@ class AuthMethods {
         password: "null",
         image: userInfoMap["image"]);
     await DatabaseMethods().addUser(userDetails.uid, userInfoMap).then((value) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => BottomNavigation_Screen()));
     });
   }
 }

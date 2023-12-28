@@ -29,7 +29,6 @@ class _NewScreenState extends State<NewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        endDrawer: kDrawer(context),
         appBar: AppBar(
             title: ScreenTitle(
           title: "Novels",

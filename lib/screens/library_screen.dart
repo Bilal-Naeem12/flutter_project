@@ -1,41 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:semster_project/components/components.dart';
 import 'package:semster_project/constants.dart';
-import 'package:semster_project/models/genre.dart';
+import 'package:semster_project/models/novel.dart';
 import 'package:semster_project/screens/new_screen.dart';
-import '../components/components.dart';
-import '../sevice/database.dart';
+import 'package:semster_project/sevice/database.dart';
 
-class Genres_Screen extends StatefulWidget {
-  const Genres_Screen({super.key});
+class Library_Screen extends StatefulWidget {
+  const Library_Screen({super.key});
 
   @override
-  State<Genres_Screen> createState() => _Genres_ScreenState();
+  State<Library_Screen> createState() => _Library_ScreenState();
 }
 
-class _Genres_ScreenState extends State<Genres_Screen> {
-  List<Genre>? genreList;
-  int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
+class _Library_ScreenState extends State<Library_Screen> {
+  List<Novel>? novelList;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    DatabaseMethods()
-        .fetchGenre()
-        .then((value) => setState(() => genreList = value));
+    DatabaseMethods().fetchNewNovels().then((value) => setState(() {
+          novelList = value;
+        }));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ScreenTitle(
-          title: "Genre",
+        title: const ScreenTitle(
+          title: "Library",
         ),
       ),
       body: Padding(
@@ -47,9 +40,9 @@ class _Genres_ScreenState extends State<Genres_Screen> {
                 childAspectRatio: 2,
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 10),
-            itemCount: genreList == null ? 0 : genreList!.length,
+            itemCount: novelList == null ? 0 : novelList!.length,
             itemBuilder: (BuildContext ctx, index) {
-              return genreList == null
+              return novelList == null
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
@@ -57,7 +50,7 @@ class _Genres_ScreenState extends State<Genres_Screen> {
                       onTap: () => PushNextScreen(
                           context: context,
                           widget: NewScreen(
-                            genre: genreList![index].genre,
+                            genre: novelList![index].title,
                           )),
                       child: Container(
                         alignment: Alignment.center,
@@ -67,11 +60,12 @@ class _Genres_ScreenState extends State<Genres_Screen> {
                                 colorFilter: ColorFilter.mode(
                                     Colors.black.withOpacity(0.3),
                                     BlendMode.darken),
-                                image: NetworkImage(genreList![index].image),
+                                image:
+                                    NetworkImage(novelList![index].image_url),
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.circular(8)),
                         child: Text(
-                          genreList![index].genre,
+                          novelList![index].title,
                           style: TextStyle(
                               fontFamily: "Roboto",
                               fontStyle: FontStyle.italic,
@@ -84,5 +78,6 @@ class _Genres_ScreenState extends State<Genres_Screen> {
             }),
       ),
     );
+    ;
   }
 }

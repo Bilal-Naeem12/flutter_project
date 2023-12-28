@@ -6,10 +6,11 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/components/validatorFucntions.dart';
 import 'package:semster_project/constants.dart';
+import 'package:semster_project/screens/bottomnavi.dart';
 
 import 'package:semster_project/screens/home_screen.dart';
+import 'package:semster_project/screens/library_screen.dart';
 
-import 'package:semster_project/screens/welcome_screen.dart';
 import 'package:semster_project/sevice/database.dart';
 
 class WriteScreen extends StatefulWidget {
@@ -206,7 +207,8 @@ class _WriteScreenState extends State<WriteScreen> {
                                       "_novel_url": _novel_url.toString(),
                                       "_image_url": _image_url.toString(),
                                       "_description": _description.toString(),
-                                      "id": int.parse(id)
+                                      "id": int.parse(id),
+                                      "createdAt": DateTime.now().toString()
                                     });
                                     // If the form is valid, display a snackbar. In the real world,
                                     showAlert(
@@ -216,7 +218,7 @@ class _WriteScreenState extends State<WriteScreen> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          WelcomeScreen()));
+                                                          BottomNavigation_Screen()));
                                             },
                                             title: 'Congratulation ',
                                             desc: 'Your Novel is Submitted',
