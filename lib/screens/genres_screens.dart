@@ -34,6 +34,7 @@ class _Genres_ScreenState extends State<Genres_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: ScreenTitle(
           title: "Genre",
         ),

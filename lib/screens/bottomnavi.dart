@@ -6,8 +6,8 @@ import 'package:semster_project/screens/library_screen.dart';
 import 'package:semster_project/screens/me_screen.dart';
 
 class BottomNavigation_Screen extends StatefulWidget {
-  const BottomNavigation_Screen({super.key});
-
+  BottomNavigation_Screen({super.key, this.selectedIndex = 0});
+  int selectedIndex;
   @override
   State<BottomNavigation_Screen> createState() =>
       _BottomNavigation_ScreenState();
@@ -21,6 +21,14 @@ class _BottomNavigation_ScreenState extends State<BottomNavigation_Screen> {
     Genres_Screen(),
     Me_Screen()
   ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      _selectedIndex = widget.selectedIndex;
+    });
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -51,14 +59,11 @@ class _BottomNavigation_ScreenState extends State<BottomNavigation_Screen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: 'Me',
-              backgroundColor: Colors.black,
             ),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: kTextColor,
           onTap: _onItemTapped,
-          backgroundColor: Colors.black,
-          type: BottomNavigationBarType.shifting,
         ));
   }
 }

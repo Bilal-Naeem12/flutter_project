@@ -35,6 +35,7 @@ class AuthMethods {
       "image": userDetails.photoURL,
       "id": userDetails.uid
     };
+    ActiveUser.isGoogle = true;
     ActiveUser.active = Usermodel(
         username: userInfoMap["username"],
         email: userInfoMap["email"],

@@ -96,6 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 print(user.image);
                                 if (user.email == _email &&
                                     user.password == _password) {
+                                  ActiveUser.isGoogle = false;
                                   ActiveUser.active = user;
                                   setState(() {
                                     _saving = false;

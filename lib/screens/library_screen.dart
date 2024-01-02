@@ -28,6 +28,7 @@ class _Library_ScreenState extends State<Library_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const ScreenTitle(
           title: "Library",
         ),

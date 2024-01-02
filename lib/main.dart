@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/firebase_options.dart';
 import 'package:semster_project/screens/avatar.dart';
+import 'package:semster_project/screens/edit_profile.dart';
 import 'package:semster_project/screens/new_screen.dart';
 import 'package:semster_project/screens/pdf_read.dart';
 import 'package:semster_project/screens/splash_screen.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           bottomNavigationBarTheme: BottomNavigationBarThemeData(
-              backgroundColor: Colors.black, unselectedItemColor: Colors.black),
+              backgroundColor: Color.fromARGB(255, 0, 0, 0)),
           drawerTheme: DrawerThemeData(backgroundColor: Colors.black),
           colorScheme: ColorScheme.fromSeed(
               seedColor: kTextColor,
@@ -56,7 +57,8 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context) => const LoginScreen(),
         SignUpScreen.id: (context) => const SignUpScreen(),
         SplashPage.id: (context) => const SplashPage(),
-        NewScreen.id: (context) => NewScreen()
+        NewScreen.id: (context) => NewScreen(),
+        EditProfileScreen.id: (context) => EditProfileScreen()
       },
     );
   }

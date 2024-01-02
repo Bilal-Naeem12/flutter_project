@@ -80,7 +80,7 @@ class DatabaseMethods {
     return childList;
   }
 
-  fetchAllUsers(username) async {
+  Future<Usermodel> fetchAllUsers(username) async {
     Usermodel childList = Usermodel(email: "", password: "", username: "");
     final databaseRef = FirebaseDatabase.instance.ref("user/");
 
