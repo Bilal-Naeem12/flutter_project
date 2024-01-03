@@ -41,8 +41,10 @@ class _NewScreenState extends State<NewScreen> {
                 if (snapshot.hasChild("Genre") || snapshot.hasChild("Image")) {
                   return Text("");
                 }
+
                 String description =
                     snapshot.child('_description').value.toString();
+                String like = snapshot.child('_likes').value.toString();
                 String img = snapshot.child('_image_url').value.toString();
                 String novel = snapshot.child('_novel_url').value.toString();
                 String title = snapshot.child('_title').value.toString();
@@ -50,7 +52,9 @@ class _NewScreenState extends State<NewScreen> {
                     snapshot.child('_writer_naem').value.toString();
                 String id = snapshot.child('1402954').value.toString();
                 return NovelCard(
+                  genre: widget.genre,
                   novel: Novel(
+                    likes: int.parse(like),
                     description: description,
                     title: title,
                     image_url: img,

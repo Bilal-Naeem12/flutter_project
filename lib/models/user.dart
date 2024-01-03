@@ -3,10 +3,11 @@ class Usermodel {
   String password;
   String username;
   String image;
-
+  String id;
   Usermodel(
       {required this.email,
       required this.password,
       required this.username,
-      this.image = ""});
+      this.image = "",
+      this.id = ""});
 }

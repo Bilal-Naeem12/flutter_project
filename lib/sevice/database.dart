@@ -9,6 +9,13 @@ class DatabaseMethods {
     return FirebaseDatabase.instance.ref("users").child(uid).set(userInfoMap);
   }
 
+  Future<bool> fetchGoogleUser(String uid) async {
+    final ref = FirebaseDatabase.instance.ref("users");
+    DataSnapshot dataSnapshot = await ref.get();
+    if (dataSnapshot.hasChild(uid)) return true;
+    return false;
+  }
+
   Future<List<Genre>> fetchGenre() async {
     List<Genre> childList = [];
     final databaseRef = FirebaseDatabase.instance.ref("NOVEL/novels");
@@ -146,5 +153,13 @@ class DatabaseMethods {
     }
 
     return childList;
+  }
+
+  Future<bool> isLikedNovel(String novel_title, DatabaseReference? ref) async {
+    DataSnapshot dataSnapshot = await ref!.get();
+    if (dataSnapshot.hasChild(novel_title)) {
+      return true;
+    }
+    return false;
   }
 }

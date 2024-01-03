@@ -37,13 +37,24 @@ class AuthMethods {
     };
     ActiveUser.isGoogle = true;
     ActiveUser.active = Usermodel(
+        id: userInfoMap["id"],
         username: userInfoMap["username"],
         email: userInfoMap["email"],
         password: "null",
         image: userInfoMap["image"]);
-    await DatabaseMethods().addUser(userDetails.uid, userInfoMap).then((value) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => BottomNavigation_Screen()));
+
+    DatabaseMethods().fetchGoogleUser(userDetails.uid).then((value) {
+      if (value) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => BottomNavigation_Screen()));
+      } else {
+        DatabaseMethods().addUser(userDetails.uid, userInfoMap).then((value) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BottomNavigation_Screen()));
+        });
+      }
     });
   }
 }

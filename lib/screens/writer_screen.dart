@@ -202,6 +202,7 @@ class _WriteScreenState extends State<WriteScreen> {
                                         .child(dropdownValue)
                                         .child(_title.toString())
                                         .set({
+                                      "_likes": 0.toString(),
                                       "_title": _title.toString(),
                                       "_write_name": _write_name.toString(),
                                       "_novel_url": _novel_url.toString(),
