@@ -7,6 +7,15 @@ TextValidator(value) {
   return null;
 }
 
+UsernameValidator(value) {
+  if (value == null || value.isEmpty) {
+    return 'Some text required';
+  } else if (value.toString().length < 5) {
+    return 'More than 5 characters required';
+  }
+  return null;
+}
+
 EmailValidator(value) {
   if (value.isEmpty) {
     return 'Email is required';

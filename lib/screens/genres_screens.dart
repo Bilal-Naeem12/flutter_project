@@ -13,7 +13,13 @@ class Genres_Screen extends StatefulWidget {
 }
 
 class _Genres_ScreenState extends State<Genres_Screen> {
-  List<Genre> genreList = [Genre()];
+  List<Genre>? genreList;
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   void initState() {
@@ -27,8 +33,8 @@ class _Genres_ScreenState extends State<Genres_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: kDrawer(context),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: ScreenTitle(
           title: "Genre",
         ),
@@ -42,34 +48,40 @@ class _Genres_ScreenState extends State<Genres_Screen> {
                 childAspectRatio: 2,
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 10),
-            itemCount: genreList.length,
+            itemCount: genreList == null ? 0 : genreList!.length,
             itemBuilder: (BuildContext ctx, index) {
-              return GestureDetector(
-                onTap: () => PushNextScreen(
-                    context: context,
-                    widget: NewScreen(
-                      genre: genreList[index].genre,
-                    )),
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: kBackgroundColor,
-                      image: DecorationImage(
-                          opacity: 1,
-                          image: NetworkImage(genreList[index].image),
-                          fit: BoxFit.cover),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Text(
-                    genreList[index].genre,
-                    style: TextStyle(
-                        fontFamily: "Roboto",
-                        fontStyle: FontStyle.italic,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: kBackgroundColor),
-                  ),
-                ),
-              );
+              return genreList == null
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : GestureDetector(
+                      onTap: () => PushNextScreen(
+                          context: context,
+                          widget: NewScreen(
+                            genre: genreList![index].genre,
+                          )),
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: kBackgroundColor,
+                            image: DecorationImage(
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.3),
+                                    BlendMode.darken),
+                                image: NetworkImage(genreList![index].image),
+                                fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Text(
+                          genreList![index].genre,
+                          style: TextStyle(
+                              fontFamily: "Roboto",
+                              fontStyle: FontStyle.italic,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: kBackgroundColor),
+                        ),
+                      ),
+                    );
             }),
       ),
     );

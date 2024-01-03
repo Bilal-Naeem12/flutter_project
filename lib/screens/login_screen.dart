@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:semster_project/components/validatorFucntions.dart';
 import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/user.dart';
+import 'package:semster_project/screens/bottomnavi.dart';
+import 'package:semster_project/screens/library_screen.dart';
 import 'package:semster_project/sevice/database.dart';
 import '../components/components.dart';
 import '../constants.dart';
-import 'welcome_screen.dart';
+
 import 'package:loading_overlay/loading_overlay.dart';
 import '../screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -86,12 +88,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           buttonPressed: () async {
                             try {
                               if (_formKey.currentState!.validate()) {
-                                await DatabaseMethods().fetchUsers(_email).then(
-                                    (value) => setState(() => user = value));
+                                await DatabaseMethods()
+                                    .fetchUserOnce(email: _email)
+                                    .then((value) =>
+                                        setState(() => user = value));
 
                                 print(user.image);
                                 if (user.email == _email &&
                                     user.password == _password) {
+                                  ActiveUser.isGoogle = false;
                                   ActiveUser.active = user;
                                   setState(() {
                                     _saving = false;
@@ -100,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              WelcomeScreen()));
+                                              BottomNavigation_Screen()));
                                 } else {
                                   throw Exception();
                                 }

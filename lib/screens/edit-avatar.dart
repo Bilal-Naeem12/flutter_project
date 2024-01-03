@@ -2,7 +2,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:semster_project/components/avatarImg.dart';
+import 'package:semster_project/constants.dart';
+import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/user.dart';
+import 'package:semster_project/screens/edit_profile.dart';
 import 'package:semster_project/screens/genres_screens.dart';
 import 'package:semster_project/screens/home_screen.dart';
 import 'package:semster_project/screens/login_screen.dart';
@@ -10,19 +13,19 @@ import 'package:semster_project/screens/writer_screen.dart';
 import 'package:semster_project/sevice/database.dart';
 import '../components/components.dart';
 
-class Avatar_Screen extends StatefulWidget {
-  const Avatar_Screen({super.key, required this.user});
-  final Usermodel user;
-  static String id = 'avatar_screen';
+class EditAvatar_Screen extends StatefulWidget {
+  const EditAvatar_Screen({super.key, required this.user});
+  final Usermodel? user;
+  static String id = 'EditAvatar_Screen';
 
   @override
-  State<Avatar_Screen> createState() => _Avatar_ScreenState();
+  State<EditAvatar_Screen> createState() => _EditAvatar_ScreenState();
 }
 
-class _Avatar_ScreenState extends State<Avatar_Screen> {
+class _EditAvatar_ScreenState extends State<EditAvatar_Screen> {
   List<AvatarImage> avatarList = List.empty();
   Image? image;
-  String? imagePath;
+  String imagePath = ActiveUser.active!.image;
   final databaseRef = FirebaseDatabase.instance.ref("user");
   @override
   void initState() {
@@ -37,7 +40,7 @@ class _Avatar_ScreenState extends State<Avatar_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ScreenTitle(title: "Select One Avatar"),
+        title: ScreenTitle(title: "Edit Profile Picture"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -49,12 +52,13 @@ class _Avatar_ScreenState extends State<Avatar_Screen> {
               ),
               CircleAvatar(
                 radius: 120,
-                backgroundColor: Colors.black,
+                backgroundColor: kBackgroundColor,
                 child: image == null
-                    ? Icon(
-                        Icons.person,
-                        size: 150,
-                      )
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(120),
+                        child: Image.network(
+                          ActiveUser.active!.image,
+                        ))
                     : ClipRRect(
                         borderRadius: BorderRadius.circular(120), child: image),
               ),
@@ -85,20 +89,14 @@ class _Avatar_ScreenState extends State<Avatar_Screen> {
                 height: 50,
               ),
               CustomButton(
-                buttonText: 'Submit',
+                buttonText: 'Select',
                 onPressed: () {
-                  databaseRef
-                      .child(widget.user.email.replaceAll(".com", "_com"))
-                      .set({
-                    "username": widget.user.username,
-                    "email": widget.user.email,
-                    "password": widget.user.password,
-                    "image": imagePath,
-                    "createdAt": DateTime.now().toString(),
-                  });
+                  ActiveUser.tempImg = imagePath!;
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditProfileScreen()));
                 },
               )
             ],

@@ -1,8 +1,13 @@
 class Usermodel {
-  final String email;
-  final String password;
-
-  final String image;
-
-  Usermodel({required this.email, required this.password, this.image = ""});
+  String email;
+  String password;
+  String username;
+  String image;
+  String id;
+  Usermodel(
+      {required this.email,
+      required this.password,
+      required this.username,
+      this.image = "",
+      this.id = ""});
 }

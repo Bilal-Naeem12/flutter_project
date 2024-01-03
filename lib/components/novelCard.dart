@@ -1,21 +1,50 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/constants.dart';
+import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/novel.dart';
 import 'package:semster_project/screens/pdf_read.dart';
+import 'package:semster_project/sevice/database.dart';
 
 class NovelCard extends StatefulWidget {
-  const NovelCard({super.key, required this.novel});
+  const NovelCard({super.key, required this.novel, required this.genre});
   final Novel novel;
+  final String genre;
+
   @override
   State<NovelCard> createState() => _NovelCardState();
 }
 
 class _NovelCardState extends State<NovelCard> {
   bool isClicked = false;
-  int counter = 23;
+  int counter = 0;
+  DatabaseReference? databaseUserRef;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      databaseUserRef = ActiveUser.isGoogle
+          ? FirebaseDatabase.instance
+              .ref("users/${ActiveUser.active!.id}/liked_novel")
+          : FirebaseDatabase.instance.ref(
+              "user/${ActiveUser.active!.email.replaceAll(".com", "_com")}/liked_novel");
+
+      counter = widget.novel.likes;
+    });
+
+    DatabaseMethods()
+        .isLikedNovel(widget.novel.title, databaseUserRef)
+        .then((value) => setState(() => isClicked = value));
+  }
+
   @override
   Widget build(BuildContext context) {
+    final databaseRef = FirebaseDatabase.instance
+        .ref("NOVEL")
+        .child("novels/${widget.genre}/${widget.novel.title}");
+
     return GestureDetector(
       onTap: () => Navigator.push(
           context,
@@ -58,7 +87,8 @@ class _NovelCardState extends State<NovelCard> {
                         height: 10,
                       ),
                       new Text(
-                        widget.novel.description.toString() + "....",
+                        widget.novel.description.toString().substring(0, 100) +
+                            "....",
                         style: TextStyle(
                           fontFamily: "Roboto",
                           color: const Color.fromARGB(255, 82, 80, 80),
@@ -75,8 +105,20 @@ class _NovelCardState extends State<NovelCard> {
                                     isClicked = !isClicked;
                                     if (isClicked != false) {
                                       counter = counter + 1;
+                                      databaseRef!.update(
+                                          {"_likes": counter.toString()});
+                                      databaseUserRef!
+                                          .child(widget.novel.title)!
+                                          .set({
+                                        "novel_title": widget.novel.title
+                                      });
                                     } else {
                                       counter = counter - 1;
+                                      databaseRef!.update(
+                                          {"_likes": counter.toString()});
+                                      databaseUserRef!
+                                          .child(widget.novel.title)
+                                          .remove();
                                     }
                                   });
                                 },

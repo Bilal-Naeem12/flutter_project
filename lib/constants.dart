@@ -3,7 +3,10 @@ import 'package:semster_project/components/avatarImg.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/user.dart';
+import 'package:semster_project/screens/edit_profile.dart';
 import 'package:semster_project/screens/login_screen.dart';
+import 'package:semster_project/screens/writer_screen.dart';
+import 'package:semster_project/sevice/auth.dart';
 
 const Color kBackgroundColor = Color.fromARGB(255, 255, 255, 255);
 const Color kTextColor = Color.fromARGB(255, 163, 211, 32);
@@ -38,39 +41,65 @@ InputDecoration kTextInputDecorationWriter(labelText, hintText,
   );
 }
 
-Drawer kDrawer(BuildContext context) {
-  return Drawer(
-    child: ListView(
-      children: [
-        DrawerHeader(
-            decoration: BoxDecoration(
-              color: kTextColor,
-            ),
-            child: AvatarImage(img: ActiveUser.active!.image)),
-        SizedBox(
-          height: 10,
-        ),
-        klistTile(text: "Setting", onTap: () {}, icon: Icons.settings),
-        SizedBox(
-          height: 20,
-        ),
-        klistTile(text: "Profile", onTap: () {}, icon: Icons.person),
-        SizedBox(
-          height: 300,
-        ),
-        Container(
-          width: 100,
-          child: CustomButton(
-            buttonText: "Logout",
-            onPressed: () {
-              ActiveUser.active = null;
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
-            },
+ListView kListView(BuildContext context) {
+  return ListView(
+    children: [
+      DrawerHeader(
+          decoration: BoxDecoration(
+            color: kTextColor,
           ),
-        )
-      ],
-    ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AvatarImage(img: ActiveUser.active!.image),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
+                ActiveUser.active!.username.toUpperCase(),
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
+              )
+            ],
+          )),
+      SizedBox(
+        height: 10,
+      ),
+      ActiveUser.isGoogle
+          ? SizedBox()
+          : klistTile(
+              text: "My Account",
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EditProfileScreen()));
+              },
+              icon: Icons.person),
+      ActiveUser.isGoogle
+          ? SizedBox()
+          : klistTile(
+              text: "Change Password", onTap: () {}, icon: Icons.password),
+      klistTile(
+          text: "Become Writer",
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => WriteScreen()));
+          },
+          icon: Icons.edit),
+      klistTile(text: "About Us", onTap: () {}, icon: Icons.chat_bubble),
+      klistTile(
+          text: "Logout",
+          onTap: () {
+            if (ActiveUser.active!.email.contains(".com")) {
+              AuthMethods().singout();
+              print("truuu kahaeee");
+            }
+            ActiveUser.active = null;
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LoginScreen()));
+          },
+          icon: Icons.logout),
+    ],
   );
 }
 
@@ -80,12 +109,11 @@ TextStyle ktextStyle() {
 
 ListTile klistTile({text, onTap, icon}) {
   return ListTile(
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(60))),
-    tileColor: kBackgroundColor,
+    visualDensity: VisualDensity(vertical: 4),
+    tileColor: Color.fromARGB(255, 29, 29, 29),
     onTap: onTap,
     trailing: Icon(
-      Icons.arrow_forward,
+      Icons.arrow_forward_ios,
       color: kTextColor,
     ),
     title: Row(

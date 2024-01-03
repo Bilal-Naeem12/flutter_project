@@ -6,10 +6,11 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/components/validatorFucntions.dart';
 import 'package:semster_project/constants.dart';
+import 'package:semster_project/screens/bottomnavi.dart';
 
 import 'package:semster_project/screens/home_screen.dart';
+import 'package:semster_project/screens/library_screen.dart';
 
-import 'package:semster_project/screens/welcome_screen.dart';
 import 'package:semster_project/sevice/database.dart';
 
 class WriteScreen extends StatefulWidget {
@@ -127,9 +128,9 @@ class _WriteScreenState extends State<WriteScreen> {
                                 errorStyle:
                                     TextStyle(fontSize: 15, color: kErrorColor),
                                 labelStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w800),
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
                                 hintStyle: TextStyle(
                                     fontSize: 15,
                                     color: kBackgroundColor.withOpacity(0.7)),
@@ -201,12 +202,14 @@ class _WriteScreenState extends State<WriteScreen> {
                                         .child(dropdownValue)
                                         .child(_title.toString())
                                         .set({
+                                      "_likes": 0.toString(),
                                       "_title": _title.toString(),
                                       "_write_name": _write_name.toString(),
                                       "_novel_url": _novel_url.toString(),
                                       "_image_url": _image_url.toString(),
                                       "_description": _description.toString(),
-                                      "id": int.parse(id)
+                                      "id": int.parse(id),
+                                      "createdAt": DateTime.now().toString()
                                     });
                                     // If the form is valid, display a snackbar. In the real world,
                                     showAlert(
@@ -216,7 +219,7 @@ class _WriteScreenState extends State<WriteScreen> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          WelcomeScreen()));
+                                                          BottomNavigation_Screen()));
                                             },
                                             title: 'Congratulation ',
                                             desc: 'Your Novel is Submitted',

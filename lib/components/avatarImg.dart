@@ -8,7 +8,7 @@ class AvatarImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
         backgroundColor: kBackgroundColor,
-        radius: 40,
+        radius: 50,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(100),
           child: Image.network(
