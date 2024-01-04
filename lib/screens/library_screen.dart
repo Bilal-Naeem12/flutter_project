@@ -39,7 +39,7 @@ class _Library_ScreenState extends State<Library_Screen> {
         child: GridView.builder(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
-                childAspectRatio: 0.8,
+                childAspectRatio: 0.7,
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 10),
             itemCount: novelList == null ? 0 : novelList!.length,
@@ -51,10 +51,11 @@ class _Library_ScreenState extends State<Library_Screen> {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
                     color: kBackgroundColor,
                     image: DecorationImage(
                         image: NetworkImage(novelList![index].image_url),
-                        fit: BoxFit.cover),
+                        fit: BoxFit.contain),
                   ),
                 ),
               );

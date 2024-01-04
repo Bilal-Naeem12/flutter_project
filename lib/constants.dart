@@ -3,6 +3,7 @@ import 'package:semster_project/components/avatarImg.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/user.dart';
+import 'package:semster_project/screens/changep_screen.dart';
 import 'package:semster_project/screens/edit_profile.dart';
 import 'package:semster_project/screens/login_screen.dart';
 import 'package:semster_project/screens/writer_screen.dart';
@@ -61,9 +62,6 @@ ListView kListView(BuildContext context) {
               )
             ],
           )),
-      SizedBox(
-        height: 10,
-      ),
       ActiveUser.isGoogle
           ? SizedBox()
           : klistTile(
@@ -78,7 +76,14 @@ ListView kListView(BuildContext context) {
       ActiveUser.isGoogle
           ? SizedBox()
           : klistTile(
-              text: "Change Password", onTap: () {}, icon: Icons.password),
+              text: "Change Password",
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChangePassworrdScreen()));
+              },
+              icon: Icons.password),
       klistTile(
           text: "Become Writer",
           onTap: () {

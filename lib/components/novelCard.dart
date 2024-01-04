@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/models/active_user.dart';
@@ -17,7 +18,9 @@ class NovelCard extends StatefulWidget {
 }
 
 class _NovelCardState extends State<NovelCard> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isClicked = false;
+  bool? isApproved;
   int counter = 0;
   DatabaseReference? databaseUserRef;
   @override
@@ -32,6 +35,7 @@ class _NovelCardState extends State<NovelCard> {
               "user/${ActiveUser.active!.email.replaceAll(".com", "_com")}/liked_novel");
 
       counter = widget.novel.likes;
+      isApproved = widget.novel.approved;
     });
 
     DatabaseMethods()
@@ -46,15 +50,14 @@ class _NovelCardState extends State<NovelCard> {
         .child("novels/${widget.genre}/${widget.novel.title}");
 
     return GestureDetector(
+      key: _scaffoldKey,
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
                   PDF_Reader(novel_url: widget.novel.novel_url))),
       child: Card(
-        shadowColor: kTextColor,
         color: kBackgroundColor,
-        elevation: 5,
         child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,40 +100,88 @@ class _NovelCardState extends State<NovelCard> {
                         textAlign: TextAlign.left,
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    isClicked = !isClicked;
-                                    if (isClicked != false) {
-                                      counter = counter + 1;
-                                      databaseRef!.update(
-                                          {"_likes": counter.toString()});
-                                      databaseUserRef!
-                                          .child(widget.novel.title)!
-                                          .set({
-                                        "novel_title": widget.novel.title
-                                      });
-                                    } else {
-                                      counter = counter - 1;
-                                      databaseRef!.update(
-                                          {"_likes": counter.toString()});
-                                      databaseUserRef!
-                                          .child(widget.novel.title)
-                                          .remove();
-                                    }
-                                  });
-                                },
-                                icon: Icon(
-                                  isClicked == true
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: Colors.red,
-                                )),
-                            Text(counter.toString())
-                          ],
-                        ),
+                        ActiveUser.active!.isSuperUser
+                            ? Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: isApproved!
+                                          ? () {}
+                                          : () async {
+                                              await databaseRef!.update(
+                                                  {"_approved": "true"});
+                                              setState(() {
+                                                isApproved = true;
+                                              });
+                                            },
+                                      icon: Icon(
+                                        Icons.check,
+                                        color: isApproved!
+                                            ? Colors.grey
+                                            : Colors.green,
+                                        size: 27,
+                                      )),
+                                ],
+                              )
+                            : SizedBox(),
+                        ActiveUser.active!.isSuperUser
+                            ? Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: isApproved!
+                                          ? () async {
+                                              await databaseRef!.update(
+                                                  {"_approved": "false"});
+                                              setState(() {
+                                                isApproved = false;
+                                              });
+                                            }
+                                          : () {},
+                                      icon: Icon(
+                                        Icons.close,
+                                        color: isApproved!
+                                            ? Colors.red
+                                            : Colors.grey,
+                                        size: 27,
+                                      )),
+                                ],
+                              )
+                            : SizedBox(),
+                        ActiveUser.active!.isSuperUser
+                            ? SizedBox()
+                            : Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isClicked = !isClicked;
+                                          if (isClicked != false) {
+                                            counter = counter + 1;
+                                            databaseRef!.update(
+                                                {"_likes": counter.toString()});
+                                            databaseUserRef!
+                                                .child(widget.novel.title)!
+                                                .set({
+                                              "novel_title": widget.novel.title
+                                            });
+                                          } else {
+                                            counter = counter - 1;
+                                            databaseRef!.update(
+                                                {"_likes": counter.toString()});
+                                            databaseUserRef!
+                                                .child(widget.novel.title)
+                                                .remove();
+                                          }
+                                        });
+                                      },
+                                      icon: Icon(
+                                        isClicked == true
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: Colors.red,
+                                      )),
+                                  Text(counter.toString())
+                                ],
+                              ),
                       ])
                     ]),
               )

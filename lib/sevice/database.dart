@@ -9,11 +9,24 @@ class DatabaseMethods {
     return FirebaseDatabase.instance.ref("users").child(uid).set(userInfoMap);
   }
 
-  Future<bool> fetchGoogleUser(String uid) async {
-    final ref = FirebaseDatabase.instance.ref("users");
+  Future<Usermodel> fetchGoogleUser(String uid) async {
+    final ref = FirebaseDatabase.instance.ref("users/${uid}");
     DataSnapshot dataSnapshot = await ref.get();
-    if (dataSnapshot.hasChild(uid)) return true;
-    return false;
+    if (dataSnapshot.exists) {
+      return Usermodel(
+          username: dataSnapshot.child("username").value.toString(),
+          email: dataSnapshot.child("email").value.toString(),
+          password: dataSnapshot.child("password").value.toString(),
+          image: dataSnapshot.child("image").value.toString(),
+          isSuperUser:
+              bool.parse(dataSnapshot.child("superUser").value.toString()));
+    }
+    return Usermodel(
+      username: "",
+      email: "",
+      password: "",
+      image: "",
+    );
   }
 
   Future<List<Genre>> fetchGenre() async {
@@ -121,7 +134,10 @@ class DatabaseMethods {
           username: dataSnapshot.child("username").value.toString(),
           email: dataSnapshot.child("email").value.toString(),
           password: dataSnapshot.child("password").value.toString(),
-          image: dataSnapshot.child("image").value.toString());
+          image: dataSnapshot.child("image").value.toString(),
+          isSuperUser: dataSnapshot.hasChild("superUser")
+              ? bool.parse(dataSnapshot.child("superUser").value.toString())
+              : false);
     }
     return childList;
   }
@@ -138,7 +154,8 @@ class DatabaseMethods {
           try {
             DateTime fileCreationDateTime =
                 DateTime.parse(element1.child("createdAt").value.toString());
-            if (DateTime.now().difference(fileCreationDateTime).inDays <= 2) {
+            if (DateTime.now().difference(fileCreationDateTime).inDays <= 2 &&
+                bool.parse(element1.child("_approved").value.toString())) {
               childList.add(Novel(
                   title: element1.child("_title").value.toString(),
                   writer: element1.child("_writer_name").value.toString(),

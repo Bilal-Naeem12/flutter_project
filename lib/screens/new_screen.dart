@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/components/novelCard.dart';
 import 'package:semster_project/constants.dart';
+import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/novel.dart';
 
 class NewScreen extends StatefulWidget {
@@ -50,18 +51,24 @@ class _NewScreenState extends State<NewScreen> {
                 String title = snapshot.child('_title').value.toString();
                 String writer_name =
                     snapshot.child('_writer_naem').value.toString();
-                String id = snapshot.child('1402954').value.toString();
-                return NovelCard(
-                  genre: widget.genre,
-                  novel: Novel(
-                    likes: int.parse(like),
-                    description: description,
-                    title: title,
-                    image_url: img,
-                    novel_url: novel,
-                    writer: writer_name,
-                  ),
-                );
+                bool approved =
+                    bool.parse(snapshot.child('_approved').value.toString());
+
+                if (approved || ActiveUser.active!.isSuperUser) {
+                  return NovelCard(
+                    genre: widget.genre,
+                    novel: Novel(
+                      approved: approved,
+                      likes: int.parse(like),
+                      description: description,
+                      title: title,
+                      image_url: img,
+                      novel_url: novel,
+                      writer: writer_name,
+                    ),
+                  );
+                }
+                return Text("");
               },
             )));
   }
