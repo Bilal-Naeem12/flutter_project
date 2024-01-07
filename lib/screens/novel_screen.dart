@@ -50,7 +50,7 @@ class _NewScreenState extends State<NewScreen> {
                 String novel = snapshot.child('_novel_url').value.toString();
                 String title = snapshot.child('_title').value.toString();
                 String writer_name =
-                    snapshot.child('_writer_naem').value.toString();
+                    snapshot.child('_write_name').value.toString();
                 bool approved =
                     bool.parse(snapshot.child('_approved').value.toString());
 

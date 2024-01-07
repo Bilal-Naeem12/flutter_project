@@ -169,7 +169,7 @@ class _WriteScreenState extends State<WriteScreen> {
                             CustomFormField(
                               textFormField: TextFormField(
                                 onChanged: (val) => _description = val,
-                                maxLength: 250,
+                                maxLength: 400,
                                 maxLines: 8,
                                 keyboardType: TextInputType.multiline,
                                 style: TextStyle(color: Colors.white),

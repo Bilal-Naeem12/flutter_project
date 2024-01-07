@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:semster_project/components/avatarImg.dart';
 import 'package:semster_project/models/genre.dart';
@@ -157,10 +159,12 @@ class DatabaseMethods {
             if (DateTime.now().difference(fileCreationDateTime).inDays <= 2 &&
                 bool.parse(element1.child("_approved").value.toString())) {
               childList.add(Novel(
+                  genre: element.child("Genre").value.toString(),
                   title: element1.child("_title").value.toString(),
-                  writer: element1.child("_writer_name").value.toString(),
+                  writer: element1.child("_write_name").value.toString(),
                   novel_url: element1.child("_novel_url").value.toString(),
                   image_url: element1.child("_image_url").value.toString(),
+                  likes: int.parse(element1.child("_likes").value.toString()),
                   description:
                       element1.child("_description").value.toString()));
             }

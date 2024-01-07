@@ -6,10 +6,12 @@ class Novel {
       required this.image_url,
       required this.description,
       this.likes = 0,
-      this.approved = false});
+      this.approved = false,
+      this.genre = ""});
   int likes;
   String title;
   String writer;
+  String genre;
   String novel_url;
   String image_url;
   String description;

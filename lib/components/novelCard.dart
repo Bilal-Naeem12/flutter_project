@@ -5,6 +5,7 @@ import 'package:semster_project/components/components.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/novel.dart';
+import 'package:semster_project/screens/novel_detail_screen.dart';
 import 'package:semster_project/screens/pdf_read.dart';
 import 'package:semster_project/sevice/database.dart';
 
@@ -55,7 +56,7 @@ class _NovelCardState extends State<NovelCard> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  PDF_Reader(novel_url: widget.novel.novel_url))),
+                  NovelDetailScreen(novel: widget.novel, genre: widget.genre))),
       child: Card(
         color: kBackgroundColor,
         child: Row(

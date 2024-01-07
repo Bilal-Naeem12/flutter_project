@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/models/novel.dart';
-import 'package:semster_project/screens/new_screen.dart';
+import 'package:semster_project/screens/novel_detail_screen.dart';
+import 'package:semster_project/screens/novel_screen.dart';
 import 'package:semster_project/screens/pdf_read.dart';
 import 'package:semster_project/sevice/database.dart';
 
@@ -45,20 +48,39 @@ class _Library_ScreenState extends State<Library_Screen> {
             itemCount: novelList == null ? 0 : novelList!.length,
             itemBuilder: (BuildContext ctx, index) {
               return GestureDetector(
-                onTap: () => PushNextScreen(
-                    context: context,
-                    widget: PDF_Reader(novel_url: novelList![index].novel_url)),
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    color: kBackgroundColor,
-                    image: DecorationImage(
-                        image: NetworkImage(novelList![index].image_url),
-                        fit: BoxFit.contain),
-                  ),
-                ),
-              );
+                  onTap: () => PushNextScreen(
+                      context: context,
+                      widget: NovelDetailScreen(
+                        novel: novelList![index],
+                        genre: novelList![index].genre,
+                      )),
+                  child: Container(
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Image.network(novelList![index].image_url,
+                            fit: BoxFit.contain),
+                        ClipRRect(
+                          // Clip it cleanly.
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                            child: Container(
+                              color: Colors.black.withOpacity(0.4),
+                              alignment: Alignment.center,
+                              child: Text(
+                                novelList![index].title,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 22),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ));
             }),
       ),
     );
