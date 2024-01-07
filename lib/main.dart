@@ -3,7 +3,7 @@ import 'package:semster_project/constants.dart';
 import 'package:semster_project/firebase_options.dart';
 import 'package:semster_project/screens/avatar.dart';
 import 'package:semster_project/screens/edit_profile.dart';
-import 'package:semster_project/screens/new_screen.dart';
+import 'package:semster_project/screens/novel_screen.dart';
 import 'package:semster_project/screens/pdf_read.dart';
 import 'package:semster_project/screens/splash_screen.dart';
 import '../screens/home_screen.dart';

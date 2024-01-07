@@ -1,8 +1,8 @@
 TextValidator(value) {
   if (value == null || value.isEmpty) {
     return 'Some text required';
-  } else if (value.toString().length < 3) {
-    return 'More than 3 characters required';
+  } else if (value.toString().length < 4) {
+    return 'More than 4 characters required';
   }
   return null;
 }

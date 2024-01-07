@@ -44,7 +44,9 @@ class AuthMethods {
         image: userInfoMap["image"]);
 
     DatabaseMethods().fetchGoogleUser(userDetails.uid).then((value) {
-      if (value) {
+      ActiveUser.active!.isSuperUser = value.isSuperUser;
+
+      if (value.username != "") {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => BottomNavigation_Screen()));
       } else {

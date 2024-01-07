@@ -69,7 +69,10 @@ class TopScreenImage extends StatelessWidget {
 }
 
 class ScreenTitle extends StatelessWidget {
-  const ScreenTitle({super.key, required this.title});
+  const ScreenTitle({
+    super.key,
+    required this.title,
+  });
   final String title;
 
   @override
@@ -83,7 +86,10 @@ class ScreenTitle extends StatelessWidget {
 }
 
 class CustomTitle extends StatelessWidget {
-  const CustomTitle({super.key, required this.title});
+  const CustomTitle({
+    super.key,
+    required this.title,
+  });
   final String title;
 
   @override

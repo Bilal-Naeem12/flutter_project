@@ -98,9 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     user.password == _password) {
                                   ActiveUser.isGoogle = false;
                                   ActiveUser.active = user;
+                                  ActiveUser.active!.isSuperUser =
+                                      user.isSuperUser;
                                   setState(() {
                                     _saving = false;
                                   });
+
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

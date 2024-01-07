@@ -5,13 +5,17 @@ class Novel {
       required this.novel_url,
       required this.image_url,
       required this.description,
-      this.likes = 0});
+      this.likes = 0,
+      this.approved = false,
+      this.genre = ""});
   int likes;
   String title;
   String writer;
+  String genre;
   String novel_url;
   String image_url;
   String description;
+  bool approved;
 
   factory Novel.fromJson(Map<String, dynamic> json) {
     return Novel(

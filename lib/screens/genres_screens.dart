@@ -1,7 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/models/genre.dart';
-import 'package:semster_project/screens/new_screen.dart';
+import 'package:semster_project/screens/novel_screen.dart';
 import '../components/components.dart';
 import '../sevice/database.dart';
 
@@ -60,28 +62,37 @@ class _Genres_ScreenState extends State<Genres_Screen> {
                           widget: NewScreen(
                             genre: genreList![index].genre,
                           )),
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: kBackgroundColor,
-                            image: DecorationImage(
-                                colorFilter: ColorFilter.mode(
-                                    Colors.black.withOpacity(0.3),
-                                    BlendMode.darken),
-                                image: NetworkImage(genreList![index].image),
-                                fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(8)),
-                        child: Text(
-                          genreList![index].genre,
-                          style: TextStyle(
-                              fontFamily: "Roboto",
-                              fontStyle: FontStyle.italic,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: kBackgroundColor),
+                      child: SizedBox(
+                        height: 200,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Image.network(
+                              genreList![index].image,
+                              fit: BoxFit.cover,
+                            ),
+                            ClipRRect(
+                              // Clip it cleanly.
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                                child: Container(
+                                  color: Colors.black.withOpacity(0.5),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    genreList![index].genre,
+                                    style: TextStyle(
+                                        fontFamily: "Roboto",
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold,
+                                        color: kBackgroundColor),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    );
+                      ));
             }),
       ),
     );
