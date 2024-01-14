@@ -40,9 +40,9 @@ class _HorizontalListState extends State<HorizontalList> {
             textAlign: TextAlign.right,
             style: TextStyle(
                 fontFamily: "Roboto",
-                fontSize: 22,
+                fontSize: 20,
                 color: kTextColor,
-                fontWeight: FontWeight.normal),
+                fontWeight: FontWeight.w500),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -63,6 +63,7 @@ class _HorizontalListState extends State<HorizontalList> {
                               genre: widget.novelList![index].genre,
                             )),
                         child: Container(
+                          color: Colors.white,
                           margin: EdgeInsets.fromLTRB(0, 10, 10, 10),
                           width: 110,
                           child: Stack(
@@ -78,6 +79,7 @@ class _HorizontalListState extends State<HorizontalList> {
                                 ),
                               ),
                               ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0), //
                                 // Clip it cleanly.
                                 child: BackdropFilter(
                                   filter:

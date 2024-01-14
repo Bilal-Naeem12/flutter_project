@@ -35,7 +35,7 @@ class _Library_ScreenState extends State<Library_Screen> {
               likedNovels = value;
             }))
         .then((value) => null);
-    Future.delayed(Duration(milliseconds: 800), () {
+    Future.delayed(Duration(seconds: 2), () {
       setState(() {
         isLoading = false;
       });
@@ -51,7 +51,7 @@ class _Library_ScreenState extends State<Library_Screen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const ScreenTitle(
+        title: const appbarTitle(
           title: "Library",
         ),
       ),
@@ -70,7 +70,6 @@ class _Library_ScreenState extends State<Library_Screen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const BannerExample(),
                     HorizontalList(
                       title: "Added Recently ",
                       novelList: novelList,
@@ -85,10 +84,7 @@ class _Library_ScreenState extends State<Library_Screen> {
                     SizedBox(
                       height: 15,
                     ),
-                    HorizontalList(
-                      novelList: likedNovels,
-                      title: "Trending",
-                    ),
+                    const BannerExample(),
                     SizedBox(
                       height: 15,
                     ),

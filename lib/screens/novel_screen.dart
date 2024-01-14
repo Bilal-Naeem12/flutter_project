@@ -34,11 +34,14 @@ class _NewScreenState extends State<NewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: ScreenTitle(
-          title: "Novels",
-        )),
+          centerTitle: true,
+          title: appbarTitle(
+            title: widget.genre.toString(),
+          ),
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [Flexible(child: novelList())],
         ));
   }
@@ -62,6 +65,7 @@ class _NewScreenState extends State<NewScreen> {
 
         if (approved || ActiveUser.active!.isSuperUser) {
           return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               NovelCard(
                 genre: widget.genre,
@@ -74,6 +78,9 @@ class _NewScreenState extends State<NewScreen> {
                   novel_url: novel,
                   writer: writer_name,
                 ),
+              ),
+              Divider(
+                thickness: 1,
               ),
               SizedBox(
                 height: 10,

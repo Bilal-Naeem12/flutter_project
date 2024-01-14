@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:semster_project/ads/app_open_ad_manager.dart';
 import 'package:semster_project/ads/applifecycle.dart';
+import 'package:semster_project/components/logoimg.dart';
 import 'package:semster_project/sevice/auth.dart';
 import '../components/components.dart';
 import '../screens/login_screen.dart';
@@ -37,20 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const ScreenTitle(title: 'Novel\'s Books'),
+              LogoImage(),
+              const ScreenTitle(title: 'Novels Gem'),
               const SizedBox(
                 height: 25,
-              ),
-              const Text(
-                'Welcome to Library, where you can read and write',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
-              ),
-              const SizedBox(
-                height: 55,
               ),
               Hero(
                 tag: 'login_btn',

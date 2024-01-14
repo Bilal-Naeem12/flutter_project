@@ -38,8 +38,9 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           bottomNavigationBarTheme: BottomNavigationBarThemeData(
-              backgroundColor: Color.fromARGB(255, 0, 0, 0)),
-          drawerTheme: DrawerThemeData(backgroundColor: Colors.black),
+              backgroundColor: kTextColor,
+              selectedItemColor: kBackgroundColor.withOpacity(1),
+              unselectedItemColor: kBackgroundColor.withOpacity(0.5)),
           colorScheme: ColorScheme.fromSeed(
               seedColor: kTextColor,
               primary: kTextColor,
@@ -49,12 +50,10 @@ class _MyAppState extends State<MyApp> {
               inversePrimary: kBackgroundColor,
               background: kTextColor,
               secondaryContainer: kTextColor),
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.black,
-            centerTitle: true,
-          ),
+          appBarTheme:
+              AppBarTheme(titleTextStyle: TextStyle(color: kBackgroundColor)),
           hintColor: kBackgroundColor,
-          scaffoldBackgroundColor: Color.fromARGB(255, 29, 29, 29),
+          scaffoldBackgroundColor: kBackgroundColor,
           textTheme: const TextTheme(
             bodyMedium: TextStyle(
               fontFamily: 'Ubuntu',

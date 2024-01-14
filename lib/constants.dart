@@ -9,9 +9,12 @@ import 'package:semster_project/screens/login_screen.dart';
 import 'package:semster_project/screens/writer_screen.dart';
 import 'package:semster_project/sevice/auth.dart';
 
-const Color kBackgroundColor = Color.fromARGB(255, 255, 255, 255);
-const Color kTextColor = Color.fromARGB(255, 163, 211, 32);
 const Color kErrorColor = Color.fromARGB(255, 255, 0, 0);
+
+const Color kBackgroundColor = Color.fromARGB(255, 255, 255, 255);
+
+const Color kTextColor = Color.fromARGB(255, 24, 154, 163);
+const Color kTTextColor = Color.fromARGB(255, 1, 2, 2);
 const InputDecoration kTextInputDecoration = InputDecoration(
   border: InputBorder.none,
   hintText: '',
@@ -22,9 +25,8 @@ InputDecoration kTextInputDecorationWriter(labelText, hintText,
     {floatingLabelBehavior = FloatingLabelBehavior.auto}) {
   return InputDecoration(
     errorStyle: TextStyle(fontSize: 15, color: kErrorColor),
-    labelStyle: TextStyle(color: Colors.white, fontSize: 22),
-    hintStyle:
-        TextStyle(fontSize: 15, color: kBackgroundColor.withOpacity(0.7)),
+    labelStyle: TextStyle(color: kTextColor, fontSize: 22),
+    hintStyle: TextStyle(fontSize: 15, color: kTextColor.withOpacity(0.5)),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10.0),
     ),
@@ -58,52 +60,64 @@ ListView kListView(BuildContext context) {
               ),
               Text(
                 ActiveUser.active!.username.toUpperCase(),
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal),
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.normal,
+                    color: kBackgroundColor),
               )
             ],
           )),
-      ActiveUser.isGoogle
-          ? SizedBox()
-          : klistTile(
-              text: "My Account",
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => EditProfileScreen()));
-              },
-              icon: Icons.person),
-      ActiveUser.isGoogle
-          ? SizedBox()
-          : klistTile(
-              text: "Change Password",
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ChangePassworrdScreen()));
-              },
-              icon: Icons.password),
-      klistTile(
-          text: "Become Writer",
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => WriteScreen()));
-          },
-          icon: Icons.edit),
-      klistTile(text: "About Us", onTap: () {}, icon: Icons.chat_bubble),
-      klistTile(
-          text: "Logout",
-          onTap: () {
-            if (ActiveUser.active!.email.contains(".com")) {
-              AuthMethods().singout();
-              print("truuu kahaeee");
-            }
-            ActiveUser.active = null;
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()));
-          },
-          icon: Icons.logout),
+      Container(
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            color: kBackgroundColor, borderRadius: BorderRadius.circular(10)),
+        child: Column(
+          children: [
+            ActiveUser.isGoogle
+                ? SizedBox()
+                : klistTile(
+                    text: "My Account",
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditProfileScreen()));
+                    },
+                    icon: Icons.person),
+            ActiveUser.isGoogle
+                ? SizedBox()
+                : klistTile(
+                    text: "Change Password",
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePassworrdScreen()));
+                    },
+                    icon: Icons.password),
+            klistTile(
+                text: "Become Writer",
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => WriteScreen()));
+                },
+                icon: Icons.edit),
+            klistTile(text: "About Us", onTap: () {}, icon: Icons.chat_bubble),
+            klistTile(
+                text: "Logout",
+                onTap: () {
+                  if (ActiveUser.active!.email.contains(".com")) {
+                    AuthMethods().singout();
+                    print("truuu kahaeee");
+                  }
+                  ActiveUser.active = null;
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                },
+                icon: Icons.logout),
+          ],
+        ),
+      ),
     ],
   );
 }
@@ -112,29 +126,34 @@ TextStyle ktextStyle() {
   return TextStyle(fontSize: 20, color: kTextColor);
 }
 
-ListTile klistTile({text, onTap, icon}) {
-  return ListTile(
-    visualDensity: VisualDensity(vertical: 4),
-    tileColor: Color.fromARGB(255, 29, 29, 29),
-    onTap: onTap,
-    trailing: Icon(
-      Icons.arrow_forward_ios,
-      color: kTextColor,
-    ),
-    title: Row(
-      children: [
-        Icon(
-          icon,
+Widget klistTile({text, onTap, icon}) {
+  return Column(
+    children: [
+      ListTile(
+        onTap: onTap,
+        trailing: Icon(
+          Icons.arrow_forward_ios,
           color: kTextColor,
         ),
-        SizedBox(
-          width: 10,
+        title: Row(
+          children: [
+            Icon(
+              icon,
+              color: kTextColor,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              text,
+              style: ktextStyle(),
+            ),
+          ],
         ),
-        Text(
-          text,
-          style: ktextStyle(),
-        ),
-      ],
-    ),
+      ),
+      Divider(
+        thickness: 1,
+      ),
+    ],
   );
 }

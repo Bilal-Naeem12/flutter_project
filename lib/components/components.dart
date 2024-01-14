@@ -68,6 +68,23 @@ class TopScreenImage extends StatelessWidget {
   }
 }
 
+class appbarTitle extends StatelessWidget {
+  const appbarTitle({
+    super.key,
+    required this.title,
+  });
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: const TextStyle(
+          fontSize: 20, fontWeight: FontWeight.normal, color: kBackgroundColor),
+    );
+  }
+}
+
 class ScreenTitle extends StatelessWidget {
   const ScreenTitle({
     super.key,
@@ -80,7 +97,7 @@ class ScreenTitle extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
-          fontSize: 35, fontWeight: FontWeight.bold, color: kBackgroundColor),
+          fontSize: 38, fontWeight: FontWeight.w500, color: kTextColor),
     );
   }
 }

@@ -12,7 +12,6 @@ class _Me_ScreenState extends State<Me_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
       body: Center(child: kListView(context)),
     );
   }

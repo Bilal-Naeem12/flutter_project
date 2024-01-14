@@ -48,7 +48,6 @@ class _BottomNavigation_ScreenState extends State<BottomNavigation_Screen> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.black,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.book),
@@ -69,8 +68,6 @@ class _BottomNavigation_ScreenState extends State<BottomNavigation_Screen> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: kTextColor,
-          unselectedItemColor: Colors.white,
           onTap: _onItemTapped,
           showUnselectedLabels: false,
         ));

@@ -37,18 +37,18 @@ class _Genres_ScreenState extends State<Genres_Screen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: ScreenTitle(
+        title: const appbarTitle(
           title: "Genre",
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
+        padding: const EdgeInsets.fromLTRB(5, 15, 5, 0),
         // implement GridView.builder
         child: GridView.builder(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
                 childAspectRatio: 2,
-                mainAxisSpacing: 20,
+                mainAxisSpacing: 10,
                 crossAxisSpacing: 10),
             itemCount: genreList == null ? 0 : genreList!.length,
             itemBuilder: (BuildContext ctx, index) {
