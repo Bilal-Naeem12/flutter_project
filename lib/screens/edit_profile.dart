@@ -52,7 +52,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             );
           },
         ),
-        title: ScreenTitle(title: 'Edit Profile'),
+        centerTitle: true,
+        title: appbarTitle(title: 'Edit Profile'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -91,7 +92,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               Icons.edit,
                               color: kBackgroundColor,
                             ),
-                            padding: EdgeInsets.all(2.0),
+                            padding: EdgeInsets.all(1.0),
                             shape: CircleBorder(),
                           )),
                     ],
@@ -113,7 +114,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 onChanged: (val) => username = val,
 
                                 keyboardType: TextInputType.multiline,
-                                style: TextStyle(color: Colors.white),
+
                                 decoration: kTextInputDecorationWriter(
                                     "User Name", "Enter Username"),
                                 cursorColor: kTextColor,

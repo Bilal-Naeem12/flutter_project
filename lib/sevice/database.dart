@@ -225,32 +225,36 @@ class DatabaseMethods {
       fetchANovel(
               genre: element.child("genre").value.toString(),
               title: element.child("novel_title").value.toString())
-          .then((value) => likedNovelList.add(value));
+          .then((value) => value == null ? "" : likedNovelList.add(value!));
     });
 
     return likedNovelList;
   }
 }
 
-Future<Novel> fetchANovel({String? genre, String? title}) async {
-  Novel novel;
+Future<Novel?> fetchANovel({String? genre, String? title}) async {
+  Novel? novel;
   final ref = FirebaseDatabase.instance.ref("NOVEL/novels/$genre/$title");
   DataSnapshot dataSnapshot = await ref.get();
   String title1 = dataSnapshot.child("_title").value.toString();
+  String approved = dataSnapshot.child("_approved").value.toString();
   String writer = dataSnapshot.child("_write_name").value.toString();
   String image_url = dataSnapshot.child("_image_url").value.toString();
   String description = dataSnapshot.child("_description").value.toString();
   String novel_url = dataSnapshot.child("_novel_url").value.toString();
   String likes = dataSnapshot.child("_likes").value.toString();
-
-  novel = Novel(
-      likes: int.parse(likes),
-      genre: genre!,
-      title: title1,
-      writer: writer,
-      novel_url: novel_url,
-      image_url: image_url,
-      description: description);
+  if (bool.parse(approved)) {
+    novel = Novel(
+        likes: int.parse(likes),
+        genre: genre!,
+        title: title1,
+        writer: writer,
+        novel_url: novel_url,
+        image_url: image_url,
+        description: description);
+  } else {
+    novel = null;
+  }
 
   return novel;
 }

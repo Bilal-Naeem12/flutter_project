@@ -64,9 +64,6 @@ class _ChangePassworrdScreenState extends State<ChangePassworrdScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 30,
-                ),
                 AvatarImage(
                   img: ActiveUser.tempImg ?? ActiveUser.active!.image,
                 ),
