@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:semster_project/components/avatarImg.dart';
+import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/genre.dart';
 import 'package:semster_project/models/novel.dart';
 import 'package:semster_project/models/user.dart';
@@ -156,7 +157,7 @@ class DatabaseMethods {
           try {
             DateTime fileCreationDateTime =
                 DateTime.parse(element1.child("createdAt").value.toString());
-            if (DateTime.now().difference(fileCreationDateTime).inDays <= 2 &&
+            if (DateTime.now().difference(fileCreationDateTime).inDays <= 30 &&
                 bool.parse(element1.child("_approved").value.toString())) {
               childList.add(Novel(
                   genre: element.child("Genre").value.toString(),
@@ -176,6 +177,33 @@ class DatabaseMethods {
     return childList;
   }
 
+  Future<List<Novel>> fetchNovels(String title) async {
+    List<Novel> childList = [];
+
+    final databaseRef = FirebaseDatabase.instance.ref("NOVEL/novels");
+
+    DataSnapshot dataSnapshot = await databaseRef.get();
+    if (dataSnapshot != null) {
+      dataSnapshot.children.forEach((element) {
+        element.children.forEach((element1) {
+          try {
+            if (title == element1.child("_title").value.toString()) {}
+            childList.add(Novel(
+                genre: element.child("Genre").value.toString(),
+                title: element1.child("_title").value.toString(),
+                writer: element1.child("_write_name").value.toString(),
+                novel_url: element1.child("_novel_url").value.toString(),
+                image_url: element1.child("_image_url").value.toString(),
+                likes: int.parse(element1.child("_likes").value.toString()),
+                description: element1.child("_description").value.toString()));
+          } catch (e) {}
+        });
+      });
+    }
+
+    return childList;
+  }
+
   Future<bool> isLikedNovel(String novel_title, DatabaseReference? ref) async {
     DataSnapshot dataSnapshot = await ref!.get();
     if (dataSnapshot.hasChild(novel_title)) {
@@ -183,4 +211,46 @@ class DatabaseMethods {
     }
     return false;
   }
+
+  Future<List<Novel>> fetchLikedNovels() async {
+    List<Novel> likedNovelList = [];
+    DatabaseReference databaseLNovelRef = ActiveUser.isGoogle
+        ? FirebaseDatabase.instance
+            .ref("users/${ActiveUser.active!.id}/liked_novel")
+        : FirebaseDatabase.instance.ref(
+            "user/${ActiveUser.active!.email.replaceAll(".com", "_com")}/liked_novel");
+    DataSnapshot dataSnapshot = await databaseLNovelRef.get();
+
+    dataSnapshot.children.forEach((element) {
+      fetchANovel(
+              genre: element.child("genre").value.toString(),
+              title: element.child("novel_title").value.toString())
+          .then((value) => likedNovelList.add(value));
+    });
+
+    return likedNovelList;
+  }
+}
+
+Future<Novel> fetchANovel({String? genre, String? title}) async {
+  Novel novel;
+  final ref = FirebaseDatabase.instance.ref("NOVEL/novels/$genre/$title");
+  DataSnapshot dataSnapshot = await ref.get();
+  String title1 = dataSnapshot.child("_title").value.toString();
+  String writer = dataSnapshot.child("_write_name").value.toString();
+  String image_url = dataSnapshot.child("_image_url").value.toString();
+  String description = dataSnapshot.child("_description").value.toString();
+  String novel_url = dataSnapshot.child("_novel_url").value.toString();
+  String likes = dataSnapshot.child("_likes").value.toString();
+
+  novel = Novel(
+      likes: int.parse(likes),
+      genre: genre!,
+      title: title1,
+      writer: writer,
+      novel_url: novel_url,
+      image_url: image_url,
+      description: description);
+
+  return novel;
 }

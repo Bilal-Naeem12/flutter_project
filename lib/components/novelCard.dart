@@ -162,7 +162,8 @@ class _NovelCardState extends State<NovelCard> {
                                             databaseUserRef!
                                                 .child(widget.novel.title)!
                                                 .set({
-                                              "novel_title": widget.novel.title
+                                              "novel_title": widget.novel.title,
+                                              "genre": widget.genre
                                             });
                                           } else {
                                             counter = counter - 1;

@@ -64,7 +64,7 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                       child: Image.network(widget.novel.image_url)),
                 ),
                 Container(
-                  height: 450,
+                  height: 550,
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
