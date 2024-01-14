@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:semster_project/ads/intertial.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/models/novel.dart';
@@ -25,6 +26,7 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    InterstitialExample _interstitialExample = InterstitialExample();
     return Stack(
       children: [
         Image.network(
@@ -90,7 +92,7 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                           children: [
                             Text(widget.novel.writer, style: detailStyle),
                             SizedBox(
-                              width: 15,
+                              width: 10,
                             ),
                             Text(
                               "|",
@@ -100,7 +102,7 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                                   fontWeight: FontWeight.w100),
                             ),
                             SizedBox(
-                              width: 15,
+                              width: 10,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -117,7 +119,7 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                               ],
                             ),
                             SizedBox(
-                              width: 15,
+                              width: 10,
                             ),
                             Text(
                               "|",
@@ -181,7 +183,9 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                         ),
                         CustomButton(
                           buttonText: "Start Reading",
-                          onPressed: () {
+                          onPressed: () async {
+                            await _interstitialExample.loadAd();
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

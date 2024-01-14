@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:semster_project/constants.dart';
+import 'package:semster_project/screens/home_screen.dart';
 import 'package:semster_project/screens/login_screen.dart';
 
 class SplashPage extends StatefulWidget {
@@ -11,9 +13,9 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 10), () {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
     });
     // TODO: implement initState
     super.initState();
@@ -29,7 +31,7 @@ class _SplashPageState extends State<SplashPage> {
             height: 50,
           ),
           CircularProgressIndicator(
-            color: Colors.amber,
+            color: kTextColor,
           ),
         ]),
       ),

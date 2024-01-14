@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:semster_project/ads/bannerAd.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/components/horizontallist.dart';
 import 'package:semster_project/constants.dart';
@@ -69,12 +70,27 @@ class _Library_ScreenState extends State<Library_Screen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    const BannerExample(),
                     HorizontalList(
+                      title: "Added Recently ",
                       novelList: novelList,
+                    ),
+                    SizedBox(
+                      height: 15,
                     ),
                     HorizontalList(
                       novelList: likedNovels,
-                      title: "Liked",
+                      title: "Liked Novels",
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    HorizontalList(
+                      novelList: likedNovels,
+                      title: "Trending",
+                    ),
+                    SizedBox(
+                      height: 15,
                     ),
                   ],
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semster_project/ads/bannerAd.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/screens/genres_screens.dart';
 import 'package:semster_project/constants.dart';
@@ -18,8 +19,8 @@ class _BottomNavigation_ScreenState extends State<BottomNavigation_Screen> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Genres_Screen(),
     Library_Screen(),
+    Genres_Screen(),
     Me_Screen()
   ];
   @override
@@ -50,12 +51,12 @@ class _BottomNavigation_ScreenState extends State<BottomNavigation_Screen> {
           backgroundColor: Colors.black,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.apps_rounded),
-              label: 'Genre',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.book),
               label: 'Library',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.apps_rounded),
+              label: 'Genre',
             ),
 
             // BottomNavigationBarItem(

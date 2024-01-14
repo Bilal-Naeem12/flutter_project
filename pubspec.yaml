@@ -43,6 +43,7 @@ dependencies:
   rflutter_alert: ^2.0.7
   firebase_database: ^10.3.8
   google_sign_in: ^6.1.6
+  google_mobile_ads: ^4.0.0
 
 
 

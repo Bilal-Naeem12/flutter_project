@@ -58,15 +58,20 @@ class _NovelCardState extends State<NovelCard> {
               builder: (context) =>
                   NovelDetailScreen(novel: widget.novel, genre: widget.genre))),
       child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(1))),
         color: kBackgroundColor,
         child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.network(
-                widget.novel.image_url,
-                width: 100,
-                height: 180,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  widget.novel.image_url,
+                  width: 100,
+                  height: 180,
+                ),
               ),
               SizedBox(
                 width: 10,
@@ -77,9 +82,6 @@ class _NovelCardState extends State<NovelCard> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 20,
-                      ),
                       Text(
                         widget.novel.title,
                         style: TextStyle(

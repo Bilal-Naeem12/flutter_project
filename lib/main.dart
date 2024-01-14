@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:semster_project/ads/app_open_ad_manager.dart';
+import 'package:semster_project/ads/applifecycle.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/firebase_options.dart';
 import 'package:semster_project/screens/avatar.dart';
@@ -17,12 +20,18 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  MobileAds.instance.initialize();
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -51,7 +60,7 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Ubuntu',
             ),
           )),
-      initialRoute: HomeScreen.id,
+      initialRoute: SplashPage.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
         LoginScreen.id: (context) => const LoginScreen(),
