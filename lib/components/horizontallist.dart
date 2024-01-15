@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:semster_project/components/components.dart';
+import 'package:semster_project/components/disapproved_novels.dart';
 import 'package:semster_project/components/novelCard2.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/models/active_user.dart';
@@ -15,7 +16,9 @@ class HorizontalList extends StatefulWidget {
       {super.key,
       required this.novelList,
       this.title = "Recents",
-      required this.subnovelList});
+      required this.subnovelList,
+      this.isSpecialOption = false});
+  bool isSpecialOption;
   List<Novel>? novelList;
   List<Novel>? subnovelList;
   String title;
@@ -57,9 +60,13 @@ class _HorizontalListState extends State<HorizontalList> {
               GestureDetector(
                   onTap: () => PushNextScreen(
                       context: context,
-                      widget: ViewAll_Screen(
-                        novelLists: widget.novelList,
-                      )),
+                      widget: widget.isSpecialOption
+                          ? Disapproved_Screen(
+                              disNovelList: widget.novelList,
+                            )
+                          : ViewAll_Screen(
+                              novelLists: widget.novelList,
+                            )),
                   child: Row(
                     children: [
                       Text(

@@ -5,6 +5,7 @@ import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/user.dart';
 import 'package:semster_project/screens/changep_screen.dart';
 import 'package:semster_project/screens/edit_profile.dart';
+import 'package:semster_project/screens/home_screen.dart';
 import 'package:semster_project/screens/login_screen.dart';
 import 'package:semster_project/screens/writer_screen.dart';
 import 'package:semster_project/sevice/auth.dart';
@@ -96,7 +97,9 @@ ListView kListView(BuildContext context) {
                     },
                     icon: Icons.password),
             klistTile(
-                text: "Become Writer",
+                text: ActiveUser.active!.isSuperUser
+                    ? "Add Novel"
+                    : "Become Writer",
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => WriteScreen()));
@@ -112,7 +115,7 @@ ListView kListView(BuildContext context) {
                   }
                   ActiveUser.active = null;
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
                 },
                 icon: Icons.logout),
           ],

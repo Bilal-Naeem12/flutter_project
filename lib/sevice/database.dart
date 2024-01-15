@@ -157,7 +157,7 @@ class DatabaseMethods {
           try {
             DateTime fileCreationDateTime =
                 DateTime.parse(element1.child("createdAt").value.toString());
-            if (DateTime.now().difference(fileCreationDateTime).inDays <= 30 &&
+            if (DateTime.now().difference(fileCreationDateTime).inDays <= 50 &&
                 bool.parse(element1.child("_approved").value.toString())) {
               childList.add(Novel(
                   genre: element.child("Genre").value.toString(),
@@ -257,4 +257,59 @@ Future<Novel?> fetchANovel({String? genre, String? title}) async {
   }
 
   return novel;
+}
+
+Future<List<Novel>> fetchNovels(String title) async {
+  List<Novel> childList = [];
+
+  final databaseRef = FirebaseDatabase.instance.ref("NOVEL/novels");
+
+  DataSnapshot dataSnapshot = await databaseRef.get();
+  if (dataSnapshot != null) {
+    dataSnapshot.children.forEach((element) {
+      element.children.forEach((element1) {
+        try {
+          if (title == element1.child("_title").value.toString()) {}
+          childList.add(Novel(
+              genre: element.child("Genre").value.toString(),
+              title: element1.child("_title").value.toString(),
+              writer: element1.child("_write_name").value.toString(),
+              novel_url: element1.child("_novel_url").value.toString(),
+              image_url: element1.child("_image_url").value.toString(),
+              likes: int.parse(element1.child("_likes").value.toString()),
+              description: element1.child("_description").value.toString()));
+        } catch (e) {}
+      });
+    });
+  }
+
+  return childList;
+}
+
+Future<List<Novel>> fetchDisNovels() async {
+  List<Novel> childList = [];
+  final databaseRef = FirebaseDatabase.instance.ref("NOVEL/novels");
+
+  DataSnapshot dataSnapshot = await databaseRef.get();
+
+  if (dataSnapshot != null) {
+    dataSnapshot.children.forEach((element) {
+      element.children.forEach((element1) {
+        try {
+          if ("false" == element1.child("_approved").value.toString()) {
+            childList.add(Novel(
+                genre: element.child("Genre").value.toString(),
+                title: element1.child("_title").value.toString(),
+                writer: element1.child("_write_name").value.toString(),
+                novel_url: element1.child("_novel_url").value.toString(),
+                image_url: element1.child("_image_url").value.toString(),
+                likes: int.parse(element1.child("_likes").value.toString()),
+                description: element1.child("_description").value.toString()));
+          }
+        } catch (e) {}
+      });
+    });
+  }
+
+  return childList;
 }

@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:semster_project/ads/bannerAd.dart';
 import 'package:semster_project/components/components.dart';
+import 'package:semster_project/components/disapproved_novels.dart';
 import 'package:semster_project/components/horizontallist.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/models/active_user.dart';
@@ -22,6 +23,8 @@ class Library_Screen extends StatefulWidget {
 
 class _Library_ScreenState extends State<Library_Screen> {
   List<Novel>? novelList;
+  List<Novel>? novelListDis;
+
   bool isLoading = true;
   DatabaseReference? databaseNovelRef;
   List<Novel>? likedNovels;
@@ -35,7 +38,7 @@ class _Library_ScreenState extends State<Library_Screen> {
               likedNovels = value;
             }))
         .then((value) => null);
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(milliseconds: 1200), () {
       setState(() {
         isLoading = false;
       });
@@ -43,6 +46,9 @@ class _Library_ScreenState extends State<Library_Screen> {
 
     DatabaseMethods().fetchNewNovels().then((value) => setState(() {
           novelList = value;
+        }));
+    fetchDisNovels().then((value) => setState(() {
+          novelListDis = value;
         }));
   }
 
@@ -74,18 +80,24 @@ class _Library_ScreenState extends State<Library_Screen> {
                     HorizontalList(
                       novelList: novelList,
                       title: "Added Recently ",
-                      subnovelList: novelList!.sublist(
-                          0, novelList!.length > 3 ? 3 : novelList!.length),
+                      subnovelList: subNovelList(novelList),
                     ),
                     SizedBox(
                       height: 15,
                     ),
                     HorizontalList(
                       novelList: likedNovels,
-                      subnovelList: likedNovels!.sublist(
-                          0, likedNovels!.length > 3 ? 3 : likedNovels!.length),
+                      subnovelList: subNovelList(likedNovels),
                       title: "Liked Novels",
                     ),
+                    !ActiveUser.active!.isSuperUser
+                        ? SizedBox()
+                        : HorizontalList(
+                            isSpecialOption: true,
+                            novelList: novelListDis,
+                            subnovelList: subNovelList(novelListDis),
+                            title: "Disapproved Novels",
+                          ),
                     SizedBox(
                       height: 15,
                     ),
@@ -98,5 +110,11 @@ class _Library_ScreenState extends State<Library_Screen> {
               ),
             ),
     );
+  }
+
+  List<Novel> subNovelList(List<Novel>? novelList) {
+    int val = 5;
+    return novelList!
+        .sublist(0, novelList.length > val ? val : novelList.length);
   }
 }

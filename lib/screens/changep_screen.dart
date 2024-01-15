@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:semster_project/models/user.dart';
@@ -8,16 +7,9 @@ import 'package:semster_project/components/components.dart';
 import 'package:semster_project/components/validatorFucntions.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/models/active_user.dart';
-import 'package:semster_project/screens/avatar.dart';
 import 'package:semster_project/screens/bottomnavi.dart';
 
-import 'package:semster_project/screens/home_screen.dart';
-import 'package:semster_project/screens/library_screen.dart';
 import 'package:semster_project/screens/me_screen.dart';
-
-import 'package:semster_project/sevice/database.dart';
-
-import 'edit-avatar.dart';
 
 class ChangePassworrdScreen extends StatefulWidget {
   const ChangePassworrdScreen({super.key});

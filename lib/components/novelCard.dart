@@ -10,10 +10,15 @@ import 'package:semster_project/screens/pdf_read.dart';
 import 'package:semster_project/sevice/database.dart';
 
 class NovelCard extends StatefulWidget {
-  const NovelCard({super.key, required this.novel, required this.genre});
+  NovelCard({
+    super.key,
+    required this.novel,
+    required this.genre,
+    this.onPress,
+  });
   final Novel novel;
   final String genre;
-
+  Function? onPress;
   @override
   State<NovelCard> createState() => _NovelCardState();
 }
@@ -100,7 +105,7 @@ class _NovelCardState extends State<NovelCard> {
                             child: new Text(
                               widget.novel.description
                                       .toString()
-                                      .substring(0, 80) +
+                                      .substring(0, 120) +
                                   "....",
                               style: TextStyle(
                                 fontFamily: "Roboto",
@@ -119,6 +124,7 @@ class _NovelCardState extends State<NovelCard> {
                                             onPressed: isApproved!
                                                 ? () {}
                                                 : () async {
+                                                    widget.onPress;
                                                     await databaseRef!.update(
                                                         {"_approved": "true"});
                                                     setState(() {
