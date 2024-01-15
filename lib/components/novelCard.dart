@@ -90,22 +90,25 @@ class _NovelCardState extends State<NovelCard> {
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
+                          overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        new Text(
-                          widget.novel.description
-                                  .toString()
-                                  .substring(0, 130) +
-                              "....",
-                          style: TextStyle(
-                            fontFamily: "Roboto",
-                            color: const Color.fromARGB(255, 82, 80, 80),
-                            fontSize: 15.0,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
+                        Container(
+                            width: 260,
+                            child: new Text(
+                              widget.novel.description
+                                      .toString()
+                                      .substring(0, 80) +
+                                  "....",
+                              style: TextStyle(
+                                fontFamily: "Roboto",
+                                color: const Color.fromARGB(255, 82, 80, 80),
+                                fontSize: 15.0,
+                              ),
+                              textAlign: TextAlign.left,
+                            )),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [

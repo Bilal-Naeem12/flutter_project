@@ -46,7 +46,7 @@ class _WriteScreenState extends State<WriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ScreenTitle(title: 'Writer Form'),
+        title: appbarTitle(title: 'Writer Form'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -70,7 +70,7 @@ class _WriteScreenState extends State<WriteScreen> {
                                 onChanged: (val) => _title = val,
 
                                 keyboardType: TextInputType.multiline,
-                                style: TextStyle(color: Colors.white),
+
                                 decoration: kTextInputDecorationWriter(
                                     "Title", "Enter Novel Title"),
                                 cursorColor: kTextColor,
@@ -83,7 +83,7 @@ class _WriteScreenState extends State<WriteScreen> {
                                 onChanged: (val) => _write_name = val,
 
                                 keyboardType: TextInputType.multiline,
-                                style: TextStyle(color: Colors.white),
+
                                 decoration: kTextInputDecorationWriter(
                                     "Writer Name", "Enter Novel\'s Write Name"),
                                 cursorColor: kTextColor,
@@ -96,7 +96,7 @@ class _WriteScreenState extends State<WriteScreen> {
                                 onChanged: (val) => _novel_url = val,
 
                                 keyboardType: TextInputType.multiline,
-                                style: TextStyle(color: Colors.white),
+
                                 decoration: kTextInputDecorationWriter(
                                     "Novel URL", "Enter Novel URL"),
                                 cursorColor: kTextColor,
@@ -109,7 +109,7 @@ class _WriteScreenState extends State<WriteScreen> {
                                 onChanged: (val) => _image_url = val,
 
                                 keyboardType: TextInputType.multiline,
-                                style: TextStyle(color: Colors.white),
+
                                 decoration: kTextInputDecorationWriter(
                                     "Image URL", "Enter Image URL"),
                                 cursorColor: kTextColor,
@@ -122,13 +122,12 @@ class _WriteScreenState extends State<WriteScreen> {
                             ),
                             DropdownMenu<String>(
                               initialSelection: dropdownValue,
-                              width: 360,
-                              textStyle: TextStyle(color: kBackgroundColor),
+                              width: 350,
                               inputDecorationTheme: InputDecorationTheme(
                                 errorStyle:
                                     TextStyle(fontSize: 15, color: kErrorColor),
                                 labelStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: kTextColor,
                                   fontSize: 22,
                                 ),
                                 hintStyle: TextStyle(
@@ -163,7 +162,9 @@ class _WriteScreenState extends State<WriteScreen> {
                                   .map<DropdownMenuEntry<String>>(
                                       (String value) {
                                 return DropdownMenuEntry<String>(
-                                    value: value, label: value);
+                                  value: value,
+                                  label: value,
+                                );
                               }).toList(),
                             ),
                             CustomFormField(
@@ -172,7 +173,7 @@ class _WriteScreenState extends State<WriteScreen> {
                                 maxLength: 400,
                                 maxLines: 8,
                                 keyboardType: TextInputType.multiline,
-                                style: TextStyle(color: Colors.white),
+
                                 decoration: kTextInputDecorationWriter(
                                     "Description", "Enter Novel Descripton",
                                     floatingLabelBehavior:

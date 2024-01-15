@@ -50,8 +50,11 @@ class _MyAppState extends State<MyApp> {
               inversePrimary: kBackgroundColor,
               background: kTextColor,
               secondaryContainer: kTextColor),
-          appBarTheme:
-              AppBarTheme(titleTextStyle: TextStyle(color: kBackgroundColor)),
+          appBarTheme: AppBarTheme(
+              centerTitle: true,
+              iconTheme: IconThemeData(color: kBackgroundColor),
+              titleTextStyle: TextStyle(color: kBackgroundColor),
+              color: kTextColor),
           hintColor: kBackgroundColor,
           scaffoldBackgroundColor: kBackgroundColor,
           textTheme: const TextTheme(

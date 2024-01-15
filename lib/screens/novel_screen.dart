@@ -85,7 +85,7 @@ class _NewScreenState extends State<NewScreen> {
               SizedBox(
                 height: 10,
               ),
-              index % 5 == 0 ? NativeExample() : SizedBox(),
+              (index + 1) % 2 == 0 ? NativeExample() : SizedBox(),
             ],
           );
         }

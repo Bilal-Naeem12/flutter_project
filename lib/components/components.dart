@@ -235,6 +235,12 @@ Alert signUpAlert({
     closeIcon: Container(),
     context: context,
     title: title,
+    style: AlertStyle(
+        backgroundColor: kBackgroundColor,
+        descStyle: TextStyle(
+          fontSize: 20,
+        ),
+        titleStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
     desc: desc,
     buttons: [
       DialogButton(
@@ -263,6 +269,7 @@ Alert showAlert({
     type: alertType,
     title: title,
     desc: desc,
+    style: AlertStyle(backgroundColor: kBackgroundColor),
     buttons: [
       DialogButton(
         onPressed: () {
@@ -271,7 +278,7 @@ Alert showAlert({
         width: 120,
         child: const Text(
           "OK",
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: TextStyle(color: kBackgroundColor, fontSize: 20),
         ),
       )
     ],

@@ -50,6 +50,7 @@ class _Library_ScreenState extends State<Library_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         automaticallyImplyLeading: false,
         title: const appbarTitle(
           title: "Library",
@@ -71,14 +72,18 @@ class _Library_ScreenState extends State<Library_Screen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     HorizontalList(
-                      title: "Added Recently ",
                       novelList: novelList,
+                      title: "Added Recently ",
+                      subnovelList: novelList!.sublist(
+                          0, novelList!.length > 3 ? 3 : novelList!.length),
                     ),
                     SizedBox(
                       height: 15,
                     ),
                     HorizontalList(
                       novelList: likedNovels,
+                      subnovelList: likedNovels!.sublist(
+                          0, likedNovels!.length > 3 ? 3 : likedNovels!.length),
                       title: "Liked Novels",
                     ),
                     SizedBox(

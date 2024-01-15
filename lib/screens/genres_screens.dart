@@ -36,13 +36,14 @@ class _Genres_ScreenState extends State<Genres_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         automaticallyImplyLeading: false,
         title: const appbarTitle(
           title: "Genre",
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(5, 15, 5, 0),
+        padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
         // implement GridView.builder
         child: GridView.builder(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

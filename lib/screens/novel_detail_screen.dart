@@ -81,7 +81,7 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                           child: Text(
                             widget.novel.title,
                             style: titleStyle,
-                            textAlign: TextAlign.start,
+                            textAlign: TextAlign.center,
                           ),
                         ),
                         const SizedBox(
@@ -90,7 +90,15 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(widget.novel.writer, style: detailStyle),
+                            Container(
+                                width: 100,
+                                child: Text(
+                                  widget.novel.writer,
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 106, 105, 105),
+                                      fontSize: 18),
+                                  textAlign: TextAlign.center,
+                                )),
                             const SizedBox(
                               width: 10,
                             ),
@@ -165,14 +173,14 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                width: 330,
+                                width: 310,
                                 child: Text(
                                   widget.novel.description,
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
                                       color: Color.fromARGB(255, 106, 105, 105),
                                       fontSize: 15,
-                                      wordSpacing: 5),
+                                      wordSpacing: 4),
                                 ),
                               ),
                             ],
