@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:semster_project/ads/bannerAd.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/screens/genres_screens.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/screens/library_screen.dart';
 import 'package:semster_project/screens/me_screen.dart';
+import 'package:semster_project/sevice/database.dart';
 
 class BottomNavigation_Screen extends StatefulWidget {
   BottomNavigation_Screen({super.key, this.selectedIndex = 0});
@@ -31,6 +33,8 @@ class _BottomNavigation_ScreenState extends State<BottomNavigation_Screen> {
   }
 
   void _onItemTapped(int index) {
+    if (index == 1) {}
+
     setState(() {
       _selectedIndex = index;
     });
@@ -44,7 +48,6 @@ class _BottomNavigation_ScreenState extends State<BottomNavigation_Screen> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.black,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.book),
@@ -54,18 +57,17 @@ class _BottomNavigation_ScreenState extends State<BottomNavigation_Screen> {
               icon: Icon(Icons.apps_rounded),
               label: 'Genre',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark),
-              label: 'Book Mark',
-            ),
+
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.bookmark),
+            //   label: 'Book Mark',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: 'Me',
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: kTextColor,
-          unselectedItemColor: Colors.white,
           onTap: _onItemTapped,
           showUnselectedLabels: false,
         ));

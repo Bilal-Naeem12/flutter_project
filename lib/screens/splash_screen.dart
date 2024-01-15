@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:semster_project/components/components.dart';
+import 'package:semster_project/components/logoimg.dart';
+import 'package:semster_project/constants.dart';
+import 'package:semster_project/screens/home_screen.dart';
 import 'package:semster_project/screens/login_screen.dart';
 
 class SplashPage extends StatefulWidget {
@@ -11,9 +15,9 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 5), () {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
     });
     // TODO: implement initState
     super.initState();
@@ -21,15 +25,16 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.black,
+    return Scaffold(
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          LogoImage(),
+          ScreenTitle(title: 'Novels Gem'),
           SizedBox(
             height: 50,
           ),
           CircularProgressIndicator(
-            color: Colors.amber,
+            color: kTextColor,
           ),
         ]),
       ),

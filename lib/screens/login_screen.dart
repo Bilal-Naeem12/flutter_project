@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semster_project/components/logoimg.dart';
 import 'package:semster_project/components/validatorFucntions.dart';
 import 'package:semster_project/models/active_user.dart';
 import 'package:semster_project/models/user.dart';
@@ -57,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               CustomFormField(
                                 textFormField: TextFormField(
-                                  style: TextStyle(color: kBackgroundColor),
+                                  style: TextStyle(color: kTTextColor),
                                   validator: (val) => EmailValidator(val),
                                   onChanged: (value) {
                                     _email = value;
@@ -68,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               CustomFormField(
                                 textFormField: TextFormField(
-                                  style: TextStyle(color: kBackgroundColor),
+                                  style: TextStyle(color: kTTextColor),
                                   validator: (val) => TextValidator(val),
                                   obscureText: true,
                                   onChanged: (value) {

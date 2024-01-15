@@ -58,135 +58,149 @@ class _NovelCardState extends State<NovelCard> {
               builder: (context) =>
                   NovelDetailScreen(novel: widget.novel, genre: widget.genre))),
       child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(1))),
         color: kBackgroundColor,
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.network(
-                widget.novel.image_url,
-                width: 100,
-                height: 180,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Container(
-                width: 250,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        widget.novel.title,
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      new Text(
-                        widget.novel.description.toString().substring(0, 100) +
-                            "....",
-                        style: TextStyle(
-                          fontFamily: "Roboto",
-                          color: const Color.fromARGB(255, 82, 80, 80),
-                          fontSize: 15.0,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    widget.novel.image_url,
+                    width: 100,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  width: 250,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.novel.title,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                        ActiveUser.active!.isSuperUser
-                            ? Row(
-                                children: [
-                                  IconButton(
-                                      onPressed: isApproved!
-                                          ? () {}
-                                          : () async {
-                                              await databaseRef!.update(
-                                                  {"_approved": "true"});
+                        SizedBox(
+                          height: 10,
+                        ),
+                        new Text(
+                          widget.novel.description
+                                  .toString()
+                                  .substring(0, 130) +
+                              "....",
+                          style: TextStyle(
+                            fontFamily: "Roboto",
+                            color: const Color.fromARGB(255, 82, 80, 80),
+                            fontSize: 15.0,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ActiveUser.active!.isSuperUser
+                                  ? Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: isApproved!
+                                                ? () {}
+                                                : () async {
+                                                    await databaseRef!.update(
+                                                        {"_approved": "true"});
+                                                    setState(() {
+                                                      isApproved = true;
+                                                    });
+                                                  },
+                                            icon: Icon(
+                                              Icons.check,
+                                              color: isApproved!
+                                                  ? Colors.grey
+                                                  : Colors.green,
+                                              size: 27,
+                                            )),
+                                      ],
+                                    )
+                                  : SizedBox(),
+                              ActiveUser.active!.isSuperUser
+                                  ? Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: isApproved!
+                                                ? () async {
+                                                    await databaseRef!.update(
+                                                        {"_approved": "false"});
+                                                    setState(() {
+                                                      isApproved = false;
+                                                    });
+                                                  }
+                                                : () {},
+                                            icon: Icon(
+                                              Icons.close,
+                                              color: isApproved!
+                                                  ? Colors.red
+                                                  : Colors.grey,
+                                              size: 27,
+                                            )),
+                                      ],
+                                    )
+                                  : SizedBox(),
+                              ActiveUser.active!.isSuperUser
+                                  ? SizedBox()
+                                  : Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {
                                               setState(() {
-                                                isApproved = true;
+                                                isClicked = !isClicked;
+                                                if (isClicked != false) {
+                                                  counter = counter + 1;
+                                                  databaseRef!.update({
+                                                    "_likes": counter.toString()
+                                                  });
+                                                  databaseUserRef!
+                                                      .child(
+                                                          widget.novel.title)!
+                                                      .set({
+                                                    "novel_title":
+                                                        widget.novel.title,
+                                                    "genre": widget.genre
+                                                  });
+                                                } else {
+                                                  counter = counter - 1;
+                                                  databaseRef!.update({
+                                                    "_likes": counter.toString()
+                                                  });
+                                                  databaseUserRef!
+                                                      .child(widget.novel.title)
+                                                      .remove();
+                                                }
                                               });
                                             },
-                                      icon: Icon(
-                                        Icons.check,
-                                        color: isApproved!
-                                            ? Colors.grey
-                                            : Colors.green,
-                                        size: 27,
-                                      )),
-                                ],
-                              )
-                            : SizedBox(),
-                        ActiveUser.active!.isSuperUser
-                            ? Row(
-                                children: [
-                                  IconButton(
-                                      onPressed: isApproved!
-                                          ? () async {
-                                              await databaseRef!.update(
-                                                  {"_approved": "false"});
-                                              setState(() {
-                                                isApproved = false;
-                                              });
-                                            }
-                                          : () {},
-                                      icon: Icon(
-                                        Icons.close,
-                                        color: isApproved!
-                                            ? Colors.red
-                                            : Colors.grey,
-                                        size: 27,
-                                      )),
-                                ],
-                              )
-                            : SizedBox(),
-                        ActiveUser.active!.isSuperUser
-                            ? SizedBox()
-                            : Row(
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          isClicked = !isClicked;
-                                          if (isClicked != false) {
-                                            counter = counter + 1;
-                                            databaseRef!.update(
-                                                {"_likes": counter.toString()});
-                                            databaseUserRef!
-                                                .child(widget.novel.title)!
-                                                .set({
-                                              "novel_title": widget.novel.title
-                                            });
-                                          } else {
-                                            counter = counter - 1;
-                                            databaseRef!.update(
-                                                {"_likes": counter.toString()});
-                                            databaseUserRef!
-                                                .child(widget.novel.title)
-                                                .remove();
-                                          }
-                                        });
-                                      },
-                                      icon: Icon(
-                                        isClicked == true
-                                            ? Icons.favorite
-                                            : Icons.favorite_border,
-                                        color: Colors.red,
-                                      )),
-                                  Text(counter.toString())
-                                ],
-                              ),
-                      ])
-                    ]),
-              )
-            ]),
+                                            icon: Icon(
+                                              isClicked == true
+                                                  ? Icons.favorite
+                                                  : Icons.favorite_border,
+                                              color: Colors.red,
+                                            )),
+                                        Text(counter.toString())
+                                      ],
+                                    ),
+                            ])
+                      ]),
+                ),
+              ]),
+        ),
       ),
     );
   }

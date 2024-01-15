@@ -40,7 +40,8 @@ class _EditAvatar_ScreenState extends State<EditAvatar_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ScreenTitle(title: "Edit Profile Picture"),
+        centerTitle: true,
+        title: appbarTitle(title: "Edit Profile Picture"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -63,30 +64,34 @@ class _EditAvatar_ScreenState extends State<EditAvatar_Screen> {
                         borderRadius: BorderRadius.circular(120), child: image),
               ),
               SizedBox(
-                height: 40,
+                height: 0,
               ),
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
-                  child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 100,
-                          childAspectRatio: 1,
-                          mainAxisSpacing: 0,
-                          crossAxisSpacing: 25),
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: avatarList.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () => setState(() {
-                            imagePath = avatarList[index].img;
-                            image = Image.network(avatarList[index].img);
-                          }),
-                          child: avatarList[index],
-                        );
-                      })),
+              Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.all(5),
+                child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 100,
+                        childAspectRatio: 1,
+                        mainAxisSpacing: 0,
+                        crossAxisSpacing: 25),
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: avatarList.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () => setState(() {
+                          imagePath = avatarList[index].img;
+                          image = Image.network(avatarList[index].img);
+                        }),
+                        child: avatarList[index],
+                      );
+                    }),
+              ),
               SizedBox(
-                height: 50,
+                height: 20,
               ),
               CustomButton(
                 buttonText: 'Select',

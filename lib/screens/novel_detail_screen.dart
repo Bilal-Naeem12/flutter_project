@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:semster_project/ads/bannerAd.dart';
+import 'package:semster_project/ads/intertial.dart';
 import 'package:semster_project/components/components.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/models/novel.dart';
@@ -25,6 +27,7 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    InterstitialExample _interstitialExample = InterstitialExample();
     return Stack(
       children: [
         Image.network(
@@ -58,13 +61,12 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                   ),
                   height: 210,
                   child: ClipRRect(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(15),
                           topRight: Radius.circular(15)),
                       child: Image.network(widget.novel.image_url)),
                 ),
                 Container(
-                  height: 450,
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -89,44 +91,44 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(widget.novel.writer, style: detailStyle),
-                            SizedBox(
-                              width: 15,
+                            const SizedBox(
+                              width: 10,
                             ),
-                            Text(
+                            const Text(
                               "|",
                               style: TextStyle(
                                   fontSize: 25,
                                   color: Color.fromARGB(255, 106, 105, 105),
                                   fontWeight: FontWeight.w100),
                             ),
-                            SizedBox(
-                              width: 15,
+                            const SizedBox(
+                              width: 10,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.favorite,
                                   color: kErrorColor,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 Text(widget.novel.likes.toString(),
                                     style: likeStyle),
                               ],
                             ),
-                            SizedBox(
-                              width: 15,
+                            const SizedBox(
+                              width: 10,
                             ),
-                            Text(
+                            const Text(
                               "|",
                               style: TextStyle(
                                   fontSize: 25,
                                   color: Color.fromARGB(255, 106, 105, 105),
                                   fontWeight: FontWeight.w100),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             Container(
@@ -167,7 +169,7 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                                 child: Text(
                                   widget.novel.description,
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Color.fromARGB(255, 106, 105, 105),
                                       fontSize: 15,
                                       wordSpacing: 5),
@@ -181,7 +183,10 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                         ),
                         CustomButton(
                           buttonText: "Start Reading",
-                          onPressed: () {
+                          onPressed: () async {
+                            await _interstitialExample.loadAd();
+
+                            // ignore: use_build_context_synchronously
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -189,7 +194,11 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                                         novel_url: widget.novel.novel_url)));
                           },
                           width: 250,
-                        )
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        BannerExample()
                       ],
                     ),
                   ),

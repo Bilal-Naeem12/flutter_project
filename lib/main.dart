@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:semster_project/ads/app_open_ad_manager.dart';
+import 'package:semster_project/ads/applifecycle.dart';
 import 'package:semster_project/constants.dart';
 import 'package:semster_project/firebase_options.dart';
 import 'package:semster_project/screens/avatar.dart';
@@ -17,20 +20,27 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  MobileAds.instance.initialize();
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           bottomNavigationBarTheme: BottomNavigationBarThemeData(
-              backgroundColor: Color.fromARGB(255, 0, 0, 0)),
-          drawerTheme: DrawerThemeData(backgroundColor: Colors.black),
+              backgroundColor: kTextColor,
+              selectedItemColor: kBackgroundColor.withOpacity(1),
+              unselectedItemColor: kBackgroundColor.withOpacity(0.5)),
           colorScheme: ColorScheme.fromSeed(
               seedColor: kTextColor,
               primary: kTextColor,
@@ -40,18 +50,16 @@ class MyApp extends StatelessWidget {
               inversePrimary: kBackgroundColor,
               background: kTextColor,
               secondaryContainer: kTextColor),
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.black,
-            centerTitle: true,
-          ),
+          appBarTheme:
+              AppBarTheme(titleTextStyle: TextStyle(color: kBackgroundColor)),
           hintColor: kBackgroundColor,
-          scaffoldBackgroundColor: Color.fromARGB(255, 29, 29, 29),
+          scaffoldBackgroundColor: kBackgroundColor,
           textTheme: const TextTheme(
             bodyMedium: TextStyle(
               fontFamily: 'Ubuntu',
             ),
           )),
-      initialRoute: HomeScreen.id,
+      initialRoute: SplashPage.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
         LoginScreen.id: (context) => const LoginScreen(),
