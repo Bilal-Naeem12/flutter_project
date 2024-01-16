@@ -191,15 +191,17 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                         ),
                         CustomButton(
                           buttonText: "Start Reading",
-                          onPressed: () async {
-                            await _interstitialExample.loadAd();
+                          onPressed: () {
+                            _interstitialExample.loadAd();
 
                             // ignore: use_build_context_synchronously
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PDF_Reader(
-                                        novel_url: widget.novel.novel_url)));
+                            Future.delayed(Duration(seconds: 3), () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PDF_Reader(
+                                          novel_url: widget.novel.novel_url)));
+                            });
                           },
                           width: 250,
                         ),

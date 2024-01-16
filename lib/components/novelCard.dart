@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -202,7 +204,9 @@ class _NovelCardState extends State<NovelCard> {
                                                   : Icons.favorite_border,
                                               color: Colors.red,
                                             )),
-                                        Text(counter.toString())
+                                        Text(counter > 1000
+                                            ? " ${(counter / 1000).toStringAsFixed(2)} k"
+                                            : counter.toString())
                                       ],
                                     ),
                             ])
