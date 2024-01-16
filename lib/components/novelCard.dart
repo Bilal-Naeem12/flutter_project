@@ -86,7 +86,7 @@ class _NovelCardState extends State<NovelCard> {
                   width: 10,
                 ),
                 Container(
-                  width: 250,
+                  width: MediaQuery.of(context).size.width - 140,
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +103,7 @@ class _NovelCardState extends State<NovelCard> {
                           height: 10,
                         ),
                         Container(
-                            width: 260,
+                            width: MediaQuery.of(context).size.width - 100,
                             child: new Text(
                               widget.novel.description
                                       .toString()

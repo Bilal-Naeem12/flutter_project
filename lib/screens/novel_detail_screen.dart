@@ -51,8 +51,7 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
             backgroundColor: Colors.transparent,
           ),
           body: SingleChildScrollView(
-            child: SafeArea(
-                child: Column(
+            child: Column(
               children: [
                 Container(
                   decoration: BoxDecoration(
@@ -73,7 +72,7 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30))),
                   child: Padding(
-                    padding: EdgeInsets.all(35.0),
+                    padding: EdgeInsets.all(15.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -214,7 +213,7 @@ class _NovelDetailScreenState extends State<NovelDetailScreen> {
                   ),
                 ),
               ],
-            )),
+            ),
           ),
         ),
       ],
@@ -229,9 +228,9 @@ TextStyle titleStyle = const TextStyle(
     fontSize: 25);
 
 TextStyle detailStyle =
-    const TextStyle(color: Color.fromARGB(255, 106, 105, 105), fontSize: 18);
+    const TextStyle(color: Color.fromARGB(255, 106, 105, 105), fontSize: 15);
 TextStyle likeStyle =
-    const TextStyle(color: Color.fromARGB(255, 180, 180, 180), fontSize: 18);
+    const TextStyle(color: Color.fromARGB(255, 180, 180, 180), fontSize: 15);
 
 TextStyle paraStyle =
-    const TextStyle(color: Color.fromARGB(255, 106, 105, 105), fontSize: 15);
+    const TextStyle(color: Color.fromARGB(255, 106, 105, 105), fontSize: 10);

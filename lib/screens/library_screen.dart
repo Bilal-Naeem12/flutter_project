@@ -78,24 +78,25 @@ class _Library_ScreenState extends State<Library_Screen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     HorizontalList(
-                      novelList: novelList,
+                      novelList: novelList!.reversed.toList(),
                       title: "Added Recently ",
-                      subnovelList: subNovelList(novelList),
+                      subnovelList: novelList!.reversed.toList(),
                     ),
                     SizedBox(
                       height: 15,
                     ),
                     HorizontalList(
-                      novelList: likedNovels,
-                      subnovelList: subNovelList(likedNovels),
+                      novelList: likedNovels!.reversed.toList(),
+                      subnovelList: likedNovels!.reversed.toList(),
                       title: "Liked Novels",
                     ),
                     !ActiveUser.active!.isSuperUser
                         ? SizedBox()
                         : HorizontalList(
                             isSpecialOption: true,
-                            novelList: novelListDis,
-                            subnovelList: subNovelList(novelListDis),
+                            novelList: novelListDis!.reversed.toList(),
+                            subnovelList:
+                                subNovelList(novelListDis).reversed.toList(),
                             title: "Disapproved Novels",
                           ),
                     SizedBox(

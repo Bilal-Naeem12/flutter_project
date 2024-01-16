@@ -191,18 +191,13 @@ class CustomBottomScreen extends StatelessWidget {
       children: [
         Align(
           alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 30,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                questionPressed();
-              },
-              child: Text(
-                question,
-                style: TextStyle(color: kTextColor),
-              ),
+          child: GestureDetector(
+            onTap: () {
+              questionPressed();
+            },
+            child: Text(
+              question,
+              style: TextStyle(color: kTextColor),
             ),
           ),
         ),

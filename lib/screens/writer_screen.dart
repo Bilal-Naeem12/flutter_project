@@ -122,7 +122,7 @@ class _WriteScreenState extends State<WriteScreen> {
                             ),
                             DropdownMenu<String>(
                               initialSelection: dropdownValue,
-                              width: 350,
+                              width: MediaQuery.of(context).size.width - 40,
                               inputDecorationTheme: InputDecorationTheme(
                                 errorStyle:
                                     TextStyle(fontSize: 15, color: kErrorColor),

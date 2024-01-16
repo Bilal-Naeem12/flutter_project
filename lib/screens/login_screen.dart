@@ -45,7 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 360,
                     height: 334,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

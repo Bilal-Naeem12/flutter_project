@@ -67,7 +67,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   const ScreenTitle(title: 'Sign Up'),
                                   CustomFormField(
                                     textFormField: TextFormField(
-                                      style: TextStyle(color: kBackgroundColor),
                                       validator: (val) => EmailValidator(val),
                                       onChanged: (value) {
                                         _email = value;
@@ -78,7 +77,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ),
                                   CustomFormField(
                                     textFormField: TextFormField(
-                                      style: TextStyle(color: kBackgroundColor),
                                       validator: (val) => TextValidator(val),
                                       onChanged: (value) {
                                         _username = value;
@@ -89,7 +87,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ),
                                   CustomFormField(
                                     textFormField: TextFormField(
-                                      style: TextStyle(color: kBackgroundColor),
                                       validator: (val) => TextValidator(val),
                                       obscureText: true,
                                       onChanged: (value) {
@@ -101,7 +98,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ),
                                   CustomFormField(
                                     textFormField: TextFormField(
-                                      style: TextStyle(color: kBackgroundColor),
                                       validator: (val) => TextValidator(val),
                                       obscureText: true,
                                       onChanged: (value) {
